@@ -9,4 +9,5 @@ public interface ConnectionService {
 
     public Connection findConnection(Long id);
 
+    Connection findByAccountName(String name);
 }

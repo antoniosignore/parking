@@ -1,31 +1,32 @@
 package com.rest.resources.asm;
 
-import com.parking.core.models.entities.AccountGroup;
-import com.rest.mvc.GroupController;
-import com.rest.resources.GroupResource;
+import com.parking.core.models.entities.Parking;
+import com.rest.mvc.ParkingController;
+import com.rest.resources.ParkingResource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
-public class ParkingResourceAsm extends ResourceAssemblerSupport<AccountGroup, GroupResource> {
+public class ParkingResourceAsm extends ResourceAssemblerSupport<Parking, ParkingResource> {
     public ParkingResourceAsm() {
-        super(GroupController.class, GroupResource.class);
+        super(ParkingController.class, ParkingResource.class);
     }
 
     @Override
-    public GroupResource toResource(AccountGroup accountGroup) {
-        GroupResource resource = new GroupResource();
+    public ParkingResource toResource(Parking parking) {
+        ParkingResource resource = new ParkingResource();
 
-        resource.setGroupName(accountGroup.getGroupName());
-        resource.setGroupDescription(accountGroup.getGroupDesc());
+        resource.setLatitude(parking.getLatitude());
+        resource.setLongitude(parking.getLongitude());
+        resource.setStatus(parking.getStatus());
+        resource.setWhenPicked(parking.getWhenPicked());
 
-        resource.add(linkTo(GroupController.class).slash(accountGroup.getId()).withSelfRel());
-        resource.add(linkTo(GroupController.class).slash(accountGroup.getId()).slash("account-entries").withRel("entries"));
+        resource.add(linkTo(ParkingController.class).slash(parking.getId()).withSelfRel());
 
-        resource.setRid(accountGroup.getId());
+        resource.setRid(parking.getId());
 
-//        if (group.getAccounts() != null)  {
-//            resource.add(linkTo(AccountController.class).slash(group.get().getId()).withRel("owner"));
+//        if (parking.getAccounts() != null)  {
+//            resource.add(linkTo(AccountController.class).slash(parking.get().getId()).withRel("owner"));
 //        }
         return resource;
     }
