@@ -5,7 +5,7 @@ import com.parking.core.models.entities.Blog;
 import com.parking.core.models.entities.AccountGroup;
 import com.parking.core.services.util.AccountList;
 import com.parking.core.services.util.BlogList;
-import com.parking.core.services.util.GroupList;
+import com.parking.core.services.util.AccountGroupList;
 
 public interface AccountService {
 
@@ -19,7 +19,7 @@ public interface AccountService {
 
     public BlogList findBlogsByAccount(Long accountId);
 
-    public GroupList findGroupsByAccount(Long accountId);
+    public AccountGroupList findGroupsByAccount(Long accountId);
 
     public AccountList findAllAccounts();
 

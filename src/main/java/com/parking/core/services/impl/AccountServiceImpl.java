@@ -12,7 +12,7 @@ import com.parking.core.services.AccountService;
 import com.parking.core.services.exceptions.*;
 import com.parking.core.services.util.AccountList;
 import com.parking.core.services.util.BlogList;
-import com.parking.core.services.util.GroupList;
+import com.parking.core.services.util.AccountGroupList;
 
 @Service
 @Transactional
@@ -92,12 +92,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public GroupList findGroupsByAccount(Long accountId) {
+    public AccountGroupList findGroupsByAccount(Long accountId) {
         Account account = accountRepo.findAccount(accountId);
         if (account == null) {
             throw new AccountDoesNotExistException();
         }
-        return new GroupList(account.getAccountGroups());
+        return new AccountGroupList(account.getAccountGroups());
     }
 
     @Override

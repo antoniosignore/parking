@@ -6,11 +6,11 @@ import com.parking.core.models.entities.AccountGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupList {
+public class AccountGroupList {
 
     private List<AccountGroup> accountGroups = new ArrayList<AccountGroup>();
 
-    public GroupList(List<AccountGroup> resultList) {
+    public AccountGroupList(List<AccountGroup> resultList) {
         this.accountGroups = resultList;
     }
 
