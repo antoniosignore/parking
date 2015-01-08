@@ -1,6 +1,6 @@
 package com.rest.resources;
 
-import com.parking.core.models.entities.Group;
+import com.parking.core.models.entities.AccountGroup;
 import org.springframework.hateoas.ResourceSupport;
 
 public class GroupResource extends ResourceSupport {
@@ -35,10 +35,10 @@ public class GroupResource extends ResourceSupport {
         this.groupDescription = groupDescription;
     }
 
-    public Group toGroup() {
-        Group group = new Group();
-        group.setGroupName(groupName);
-        group.setGroupDesc(groupDescription);
-        return group;
+    public AccountGroup toGroup() {
+        AccountGroup accountGroup = new AccountGroup();
+        accountGroup.setGroupName(groupName);
+        accountGroup.setGroupDesc(groupDescription);
+        return accountGroup;
     }
 }

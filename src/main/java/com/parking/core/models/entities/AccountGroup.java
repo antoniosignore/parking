@@ -2,24 +2,29 @@ package com.parking.core.models.entities;
 
 import com.parking.core.models.entities.Account;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
-public class Group implements Serializable {
+@Table(uniqueConstraints= @UniqueConstraint(columnNames = {"groupName"}))
+public class AccountGroup implements Serializable {
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String groupName;
+
     private String groupDesc;
 
-    @ManyToMany(mappedBy="groups")
-    private Set<Account> accounts = new HashSet<Account>();
+    @ManyToMany(mappedBy="accountGroups")
+    private List<Account> accounts = new ArrayList<Account>();
 
-    public Group() {
+    public AccountGroup() {
     }
 
     public Long getId() {
@@ -46,11 +51,15 @@ public class Group implements Serializable {
         this.groupDesc = groupDesc;
     }
 
-    public Set<Account> getAccounts() {
-        return accounts;
+    public void addAccount(Account account){
+        accounts.add(account);
     }
 
-    public void setAccounts(Set<Account> accounts) {
-        this.accounts = accounts;
+    public void removeAccount(Account account){
+        accounts.remove(account);
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
     }
 }

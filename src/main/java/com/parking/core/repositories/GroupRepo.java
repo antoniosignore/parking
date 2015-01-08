@@ -1,19 +1,19 @@
 package com.parking.core.repositories;
 
 
-import com.parking.core.models.entities.Group;
+import com.parking.core.models.entities.AccountGroup;
 
 import java.util.List;
+import java.util.Set;
 
 public interface GroupRepo {
 
-    public Group createGroup(Group data);
+    public AccountGroup createGroup(AccountGroup data);
 
-    public List<Group> findAllGroups();
+    public List<AccountGroup> findAllGroups();
 
-    public Group findGroup(Long id);
+    public AccountGroup findGroup(Long id);
 
-    public Group findGroupByTitle(String title);
+    public AccountGroup findGroupByName(String name);
 
-    public List<Group> findGroupsByAccount(Long accountId);
 }

@@ -1,9 +1,7 @@
 package com.parking.core.repositories;
 
-import com.parking.core.models.entities.Account;
-import com.parking.core.models.entities.AccountGroup;
+import com.parking.core.models.entities.*;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +10,16 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/business-config.xml")
-public class GroupRepoTest {
+public class ConnectionRepoTest {
 
     @Autowired
     private AccountRepo accountRepo;
@@ -27,11 +27,13 @@ public class GroupRepoTest {
     @Autowired
     private GroupRepo groupRepo;
 
+    @Autowired
+    private ConnectionRepo connectionRepo;
+
     private Account antonio;
     private Account mida;
-
-    AccountGroup family = new AccountGroup();
-    AccountGroup friends = new AccountGroup();
+    AccountGroup friends;
+    AccountGroup family;
 
     @Before
     @Transactional
@@ -45,23 +47,21 @@ public class GroupRepoTest {
         mida.setName("mida");
         mida.setPassword("provolone");
 
-        family = new AccountGroup();
-        family.setGroupName("family");
-        family.setGroupDesc("la mia famiglia");
-        groupRepo.createGroup(family);
-
-        groupRepo.createGroup(family);
-
         friends = new AccountGroup();
         friends.setGroupName("friends");
         friends.setGroupDesc("I miei amici");
         groupRepo.createGroup(friends);
 
-        antonio.addAccountGroup(family);
-        antonio.addAccountGroup(friends);
+        family = new AccountGroup();
+        family.setGroupName("colleghi");
+        family.setGroupDesc("I miei amici");
+        groupRepo.createGroup(family);
 
-        mida.addAccountGroup(family);
+        antonio.addAccountGroup(friends);
+        antonio.addAccountGroup(family);
+
         mida.addAccountGroup(friends);
+        mida.addAccountGroup(family);
 
         accountRepo.createAccount(antonio);
         accountRepo.createAccount(mida);
@@ -69,19 +69,34 @@ public class GroupRepoTest {
 
     @Test
     @Transactional
-    public void testFind() {
-        AccountGroup AccountGroup = groupRepo.findGroup(this.family.getId());
-        assertNotNull(AccountGroup);
-        assertEquals(AccountGroup.getGroupName(), "family");
+    public void testCreateConnection() {
+
+        Connection connection = new Connection();
+
+        connection.setInitiator(antonio);
+        connection.setReceiver(mida);
+
+        connection.setInitiatorGroup(friends);
+
+        connectionRepo.createConnection(connection);
+
+
     }
 
     @Test
     @Transactional
-    public void testFindAllGroups() {
-        List<AccountGroup> accountGroups = groupRepo.findAllGroups();
-        assertNotNull(accountGroups);
-        assertEquals(accountGroups.size(), 2);
+    public void testFindAccountByName() {
+        Account antonio1 = accountRepo.findAccountByName("antonio");
+        assertNotNull(antonio1);
+        assertEquals(antonio.getName(), "antonio");
+        assertEquals(antonio.getPassword(), "ciccionazzo");
     }
 
+    @Test
+    @Transactional
+    public void testFindAllAccounts() {
+        List<Account> allAccounts = accountRepo.findAllAccounts();
+        assertEquals(2, allAccounts.size());
+    }
 
 }

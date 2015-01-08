@@ -15,7 +15,7 @@ public class GroupListResourceAsm extends ResourceAssemblerSupport<GroupList, Gr
     @Override
     public GroupListResource toResource(GroupList groupList) {
         GroupListResource res = new GroupListResource();
-        res.setGroups(new GroupResourceAsm().toResources(groupList.getGroups()));
+        res.setGroups(new GroupResourceAsm().toResources(groupList.getAccountGroups()));
         return res;
     }
 }

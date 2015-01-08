@@ -1,13 +1,19 @@
 package com.parking.core.repositories.jpa;
 
-import com.parking.core.models.entities.Group;
+import com.parking.core.models.entities.Account;
+import com.parking.core.models.entities.AccountGroup;
+import com.parking.core.repositories.AccountRepo;
 import com.parking.core.repositories.GroupRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class jpaGroupRepo implements GroupRepo {
@@ -15,39 +21,36 @@ public class jpaGroupRepo implements GroupRepo {
     @PersistenceContext
     private EntityManager em;
 
+    @Autowired
+    AccountRepo accountRepo;
+
     @Override
-    public Group createGroup(Group data) {
+    public AccountGroup createGroup(AccountGroup data) {
         em.persist(data);
         return data;
     }
 
     @Override
-    public List<Group> findAllGroups() {
-        Query query = em.createQuery("SELECT b from Group b");
+    public List<AccountGroup> findAllGroups() {
+        Query query = em.createQuery("SELECT b from AccountGroup b");
         return query.getResultList();
     }
 
     @Override
-    public Group findGroup(Long id) {
-        return em.find(Group.class, id);
+    public AccountGroup findGroup(Long id) {
+        return em.find(AccountGroup.class, id);
     }
 
     @Override
-    public Group findGroupByTitle(String title) {
-        Query query = em.createQuery("SELECT b from Group b where b.groupName=?1");
+    public AccountGroup findGroupByName(String title) {
+        Query query = em.createQuery("SELECT b from AccountGroup b where b.groupName=?1");
         query.setParameter(1, title);
-        List<Group> Groups = query.getResultList();
-        if (Groups.isEmpty()) {
+        List<AccountGroup> accountGroups = query.getResultList();
+        if (accountGroups.isEmpty()) {
             return null;
         } else {
-            return Groups.get(0);
+            return accountGroups.get(0);
         }
     }
 
-    @Override
-    public List<Group> findGroupsByAccount(Long accountId) {
-        Query query = em.createQuery("SELECT b from Group b where b.owner.id=?1");
-        query.setParameter(1, accountId);
-        return query.getResultList();
-    }
 }

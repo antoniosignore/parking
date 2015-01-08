@@ -1,10 +1,11 @@
 package com.parking.core.models.entities;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(uniqueConstraints= @UniqueConstraint(columnNames = {"name"}))
 public class Account {
 
     @Id
@@ -39,17 +40,21 @@ public class Account {
     }
 
     @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name="ACCOUNT_GROUP",
-            joinColumns={@JoinColumn(name="ACCOUNT_ID")},
-            inverseJoinColumns={@JoinColumn(name="GROUP_ID")})
-    private Set<Group> groups = new HashSet<Group>();
+    @JoinTable(name="account_group",
+            joinColumns={@JoinColumn(name="account_id")},
+            inverseJoinColumns={@JoinColumn(name="group_id")})
+    private List<AccountGroup> accountGroups = new ArrayList<AccountGroup>();
 
-    public Set<Group> getGroups() {
-        return groups;
+    public List<AccountGroup> getAccountGroups() {
+        return accountGroups;
     }
 
-    public void setGroups(Set<Group> groups) {
-        this.groups = groups;
+    public void addAccountGroup(AccountGroup group){
+        accountGroups.add(group);
+    }
+
+    public void removeAccountGroup(AccountGroup group){
+        accountGroups.remove(group);
     }
 
     @Override

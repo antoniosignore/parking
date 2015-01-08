@@ -41,6 +41,7 @@ public class JpaAccountRepo implements AccountRepo {
     @Override
     public Account createAccount(Account data) {
         em.persist(data);
+        em.flush();
         return data;
     }
 }
