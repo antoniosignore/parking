@@ -1,5 +1,6 @@
 package com.rest.mvc;
 
+import com.parking.core.models.entities.Group;
 import com.rest.resources.asm.GroupListResourceAsm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,9 +37,9 @@ public class GroupController {
     @RequestMapping(value = "/{groupId}",
             method = RequestMethod.GET)
     public ResponseEntity<GroupResource> getStock(@PathVariable Long groupId) {
-        Stock stock = groupService.findGroup(groupId);
-        if (stock != null) {
-            GroupResource res = new GroupResourceAsm().toResource(stock);
+        Group group = groupService.findGroup(groupId);
+        if (group != null) {
+            GroupResource res = new GroupResourceAsm().toResource(group);
             return new ResponseEntity<GroupResource>(res, HttpStatus.OK);
         } else {
             return new ResponseEntity<GroupResource>(HttpStatus.NOT_FOUND);

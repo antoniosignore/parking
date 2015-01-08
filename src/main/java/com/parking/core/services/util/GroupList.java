@@ -1,7 +1,7 @@
 package com.parking.core.services.util;
 
 
-import com.parking.core.models.entities.parking.Group;
+import com.parking.core.models.entities.Group;
 
 import java.util.ArrayList;
 import java.util.List;

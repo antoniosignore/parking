@@ -1,4 +1,4 @@
-package com.parking.core.models.entities.parking;
+package com.parking.core.models.entities;
 
 import com.parking.core.models.entities.Account;
 

@@ -1,7 +1,7 @@
 package com.parking.core.repositories;
 
 
-import com.parking.core.models.entities.parking.Group;
+import com.parking.core.models.entities.Group;
 
 import java.util.List;
 

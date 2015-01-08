@@ -1,6 +1,6 @@
 package com.parking.core.services.impl;
 
-import com.parking.core.models.entities.parking.Group;
+import com.parking.core.models.entities.Group;
 import com.parking.core.repositories.GroupRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

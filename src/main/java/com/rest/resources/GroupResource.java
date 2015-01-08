@@ -1,6 +1,6 @@
 package com.rest.resources;
 
-import com.parking.core.models.entities.parking.Group;
+import com.parking.core.models.entities.Group;
 import org.springframework.hateoas.ResourceSupport;
 
 public class GroupResource extends ResourceSupport {

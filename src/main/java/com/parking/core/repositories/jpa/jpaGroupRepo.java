@@ -1,6 +1,6 @@
 package com.parking.core.repositories.jpa;
 
-import com.parking.core.models.entities.parking.Group;
+import com.parking.core.models.entities.Group;
 import com.parking.core.repositories.GroupRepo;
 import org.springframework.stereotype.Repository;
 

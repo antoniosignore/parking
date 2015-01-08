@@ -1,7 +1,5 @@
 package com.parking.core.models.entities;
 
-import com.parking.core.models.entities.parking.Group;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
