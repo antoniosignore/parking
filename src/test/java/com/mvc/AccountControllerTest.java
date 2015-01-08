@@ -1,13 +1,15 @@
 package com.mvc;
 
+import com.parking.core.security.AccountUserDetails;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.parking.core.models.entities.Account;
@@ -28,6 +30,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,9 +40,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * Created by Chris on 6/28/14.
- */
 public class AccountControllerTest {
     @InjectMocks
     private AccountController controller;
@@ -47,24 +47,34 @@ public class AccountControllerTest {
     @Mock
     private AccountService service;
 
-//    @Mock
-//    private SecurityContext securityContext;
 
     private MockMvc mockMvc;
 
     private ArgumentCaptor<Account> accountCaptor;
 
+    UserDetails userDetails;
+
     @Before
     public void setup() {
 
 
-        MockitoAnnotations.initMocks(this);
+        UserDetails details = new AccountUserDetails(null);
 
-//        SecurityContextHolder.setContext(securityContext);
+        MockitoAnnotations.initMocks(this);
 
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
         accountCaptor = ArgumentCaptor.forClass(Account.class);
+
+        Authentication authentication = Mockito.mock(Authentication.class);
+        Mockito.when(authentication.getPrincipal()).thenReturn(details);
+
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+
+        when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(details);
+
     }
 
     @Test
@@ -113,7 +123,6 @@ public class AccountControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Ignore
     @Test
     public void createBlogExistingAccount() throws Exception {
         Blog createdBlog = new Blog();

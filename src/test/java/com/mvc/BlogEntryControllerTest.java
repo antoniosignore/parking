@@ -21,9 +21,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-/**
- * Created by Chris on 6/19/14.
- */
 public class BlogEntryControllerTest {
     @InjectMocks
     private BlogEntryController controller;

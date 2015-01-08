@@ -17,6 +17,7 @@ public class JpaBlogRepo implements BlogRepo {
     @Override
     public Blog createBlog(Blog data) {
         em.persist(data);
+        em.flush();
         return data;
     }
 

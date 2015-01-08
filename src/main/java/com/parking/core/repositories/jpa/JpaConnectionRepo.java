@@ -10,7 +10,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-public class jpaConnection implements ConnectionRepo{
+public class JpaConnectionRepo implements ConnectionRepo{
 
     @PersistenceContext
     private EntityManager em;
@@ -29,6 +29,7 @@ public class jpaConnection implements ConnectionRepo{
     @Override
     public Connection createConnection(Connection data) {
         em.persist(data);
+        em.flush();
         return data;
     }
 }

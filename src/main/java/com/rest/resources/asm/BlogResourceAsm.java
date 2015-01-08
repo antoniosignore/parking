@@ -20,8 +20,8 @@ public class BlogResourceAsm extends ResourceAssemblerSupport<Blog, BlogResource
         resource.add(linkTo(BlogController.class).slash(blog.getId()).withSelfRel());
         resource.add(linkTo(BlogController.class).slash(blog.getId()).slash("blog-entries").withRel("entries"));
         resource.setRid(blog.getId());
-        if (blog.getOwner() != null)
-            resource.add(linkTo(AccountController.class).slash(blog.getOwner().getId()).withRel("owner"));
+        if (blog.getParking() != null)
+            resource.add(linkTo(AccountController.class).slash(blog.getParking().getId()).withRel("owner"));
         return resource;
     }
 }

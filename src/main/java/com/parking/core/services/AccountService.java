@@ -13,7 +13,7 @@ public interface AccountService {
 
     public Account createAccount(Account data);
 
-    public Blog createBlog(Long accountId, Blog data);
+    public Blog createBlog(Long parkingId, Blog data);
 
     public AccountGroup createGroup(Long accountId, AccountGroup data);
 

@@ -1,5 +1,6 @@
 package com.mvc;
 
+import com.parking.core.models.entities.Parking;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -31,9 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * Created by Chris on 6/28/14.
- */
 public class BlogControllerTest {
     @InjectMocks
     private BlogController controller;
@@ -80,9 +78,11 @@ public class BlogControllerTest {
         blog.setTitle("Test Title");
         blog.setId(1L);
 
+        Parking parking = new Parking();
+
         Account account = new Account();
         account.setId(1L);
-        blog.setOwner(account);
+        blog.setParking(parking);
 
         when(blogService.findBlog(1L)).thenReturn(blog);
 

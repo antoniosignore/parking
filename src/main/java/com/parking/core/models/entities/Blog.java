@@ -15,7 +15,7 @@ public class Blog {
     private String title;
 
     @OneToOne
-    private Account owner;
+    private Parking parking;
 
     public Long getId() {
         return id;
@@ -33,11 +33,11 @@ public class Blog {
         this.title = title;
     }
 
-    public Account getOwner() {
-        return owner;
+    public Parking getParking() {
+        return parking;
     }
 
-    public void setOwner(Account owner) {
-        this.owner = owner;
+    public void setParking(Parking parking) {
+        this.parking = parking;
     }
 }

@@ -1,6 +1,7 @@
 package com.parking.core.services.impl;
 
 import com.parking.core.models.entities.AccountGroup;
+import com.parking.core.models.entities.Parking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,15 +14,15 @@ import com.parking.core.services.util.AccountList;
 import com.parking.core.services.util.BlogList;
 import com.parking.core.services.util.GroupList;
 
-import java.util.Collection;
-import java.util.List;
-
 @Service
 @Transactional
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountRepo accountRepo;
+
+    @Autowired
+    private ParkingRepo parkingRepo;
 
     @Autowired
     private BlogRepo blogRepo;
@@ -44,21 +45,21 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Blog createBlog(Long accountId, Blog data) {
+    public Blog createBlog(Long parkingId, Blog data) {
         Blog blogSameTitle = blogRepo.findBlogByTitle(data.getTitle());
 
         if (blogSameTitle != null) {
             throw new BlogExistsException();
         }
 
-        Account account = accountRepo.findAccount(accountId);
+        Parking account = parkingRepo.findParking(parkingId);
         if (account == null) {
             throw new AccountDoesNotExistException();
         }
 
         Blog createdBlog = blogRepo.createBlog(data);
 
-        createdBlog.setOwner(account);
+        createdBlog.setParking(account);
 
         return createdBlog;
     }
