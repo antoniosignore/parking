@@ -15,11 +15,11 @@ public class Parking {
 
     Date parkingDate;
 
-    @Enumerated(EnumType.STRING)
-    private ParkingStatusEnum status;
-
     @OneToOne
     Account pickedBy;
+
+    @Enumerated(EnumType.STRING)
+    private ParkingStatusEnum status;
 
     Date whenPicked;
 
