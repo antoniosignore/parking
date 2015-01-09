@@ -22,9 +22,6 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepo accountRepo;
 
     @Autowired
-    private ParkingRepo parkingRepo;
-
-    @Autowired
     private BlogRepo blogRepo;
 
     @Autowired
@@ -45,21 +42,21 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Blog createBlog(Long parkingId, Blog data) {
+    public Blog createBlog(Long accountId, Blog data) {
         Blog blogSameTitle = blogRepo.findBlogByTitle(data.getTitle());
 
         if (blogSameTitle != null) {
             throw new BlogExistsException();
         }
 
-        Parking account = parkingRepo.findParking(parkingId);
+        Account account = accountRepo.findAccount(accountId);
         if (account == null) {
             throw new AccountDoesNotExistException();
         }
 
         Blog createdBlog = blogRepo.createBlog(data);
 
-        createdBlog.setParking(account);
+        createdBlog.setOwner(account);
 
         return createdBlog;
     }

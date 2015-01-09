@@ -32,4 +32,18 @@ public class JpaConnectionRepo implements ConnectionRepo{
         em.flush();
         return data;
     }
+
+    @Override
+    public List<Connection> findConnectionByAccountName(String name) {
+
+        /*
+        Query query = em.createQuery("SELECT b from AccountGroup b where b.groupName=?1");
+        query.setParameter(1, title);
+        List<AccountGroup> accountGroups = query.getResultList();
+         */
+        Query query = em.createQuery("SELECT b from Connection b where b.initiator.name=?1");
+        query.setParameter(1, name);
+        return query.getResultList();
+
+    }
 }

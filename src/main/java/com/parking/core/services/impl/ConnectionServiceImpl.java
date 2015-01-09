@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class ConnectionServiceImpl implements ConnectionService {
@@ -23,5 +25,10 @@ public class ConnectionServiceImpl implements ConnectionService {
     @Override
     public Connection findConnection(Long id) {
         return connectionRepo.findConnection(id);
+    }
+
+    @Override
+    public List<Connection> findByAccountName(String name) {
+        return connectionRepo.findConnectionByAccountName(name);
     }
 }

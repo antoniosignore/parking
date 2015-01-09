@@ -7,13 +7,14 @@ import java.util.List;
 
 public class ParkingListResource extends ResourceSupport {
 
-    private List<ConnectionResource> parkings = new ArrayList<ConnectionResource>();
+    private List<ParkingResource> parkings = new ArrayList<ParkingResource>();
 
-    public List<ConnectionResource> getParkings() {
+
+    public List<ParkingResource> getParkings() {
         return parkings;
     }
 
-    public void setParkings(List<ConnectionResource> parkings) {
+    public void setParkings(List<ParkingResource> parkings) {
         this.parkings = parkings;
     }
 }

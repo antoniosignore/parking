@@ -11,6 +11,6 @@ public interface ConnectionRepo {
     public Connection findConnection(Long id);
 
     public Connection createConnection(Connection data);
-    
-    
+
+    List<Connection> findConnectionByAccountName(String name);
 }

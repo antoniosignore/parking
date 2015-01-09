@@ -1,6 +1,5 @@
 package com.mvc;
 
-import com.parking.core.models.entities.Parking;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -78,11 +77,9 @@ public class BlogControllerTest {
         blog.setTitle("Test Title");
         blog.setId(1L);
 
-        Parking parking = new Parking();
-
         Account account = new Account();
         account.setId(1L);
-        blog.setParking(parking);
+        blog.setOwner(account);
 
         when(blogService.findBlog(1L)).thenReturn(blog);
 

@@ -29,6 +29,7 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -47,6 +48,8 @@ public class AccountControllerTest {
     @Mock
     private AccountService service;
 
+    @Mock
+    private UserDetails details;
 
     private MockMvc mockMvc;
 
@@ -57,10 +60,9 @@ public class AccountControllerTest {
     @Before
     public void setup() {
 
-
-        UserDetails details = new AccountUserDetails(null);
-
         MockitoAnnotations.initMocks(this);
+
+        Mockito.when(details.getUsername()).thenReturn("antonio");
 
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
@@ -72,6 +74,7 @@ public class AccountControllerTest {
         SecurityContext securityContext = Mockito.mock(SecurityContext.class);
         Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
         SecurityContextHolder.setContext(securityContext);
+
 
         when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(details);
 
@@ -130,6 +133,10 @@ public class AccountControllerTest {
         createdBlog.setTitle("Test Title");
 
         when(service.createBlog(eq(1L), any(Blog.class))).thenReturn(createdBlog);
+
+        Account antonio = new Account();
+        antonio.setId(1L);
+        when(service.findByAccountName(anyString())).thenReturn(antonio);
 
         mockMvc.perform(post("/rest/accounts/1/blogs")
                 .content("{\"title\":\"Test Title\"}")
