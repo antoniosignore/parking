@@ -148,10 +148,13 @@ public class AccountControllerTest {
                 .andExpect(status().isCreated());
     }
 
-    @Ignore
     @Test
     public void createBlogNonExistingAccount() throws Exception {
         when(service.createBlog(eq(1L), any(Blog.class))).thenThrow(new AccountDoesNotExistException());
+
+        Account antonio = new Account();
+        antonio.setId(1L);
+        when(service.findByAccountName(anyString())).thenReturn(antonio);
 
         mockMvc.perform(post("/rest/accounts/1/blogs")
                 .content("{\"title\":\"Test Title\"}")
@@ -159,10 +162,13 @@ public class AccountControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Ignore
     @Test
     public void createBlogExistingBlogName() throws Exception {
         when(service.createBlog(eq(1L), any(Blog.class))).thenThrow(new BlogExistsException());
+
+        Account antonio = new Account();
+        antonio.setId(1L);
+        when(service.findByAccountName(anyString())).thenReturn(antonio);
 
         mockMvc.perform(post("/rest/accounts/1/blogs")
                 .content("{\"title\":\"Test Title\"}")

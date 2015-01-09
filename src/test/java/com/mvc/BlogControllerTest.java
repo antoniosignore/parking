@@ -93,6 +93,7 @@ public class BlogControllerTest {
                 .andExpect(jsonPath("$.links[*].rel",
                         hasItems(is("self"), is("owner"), is("entries"))))
                 .andExpect(jsonPath("$.title", is("Test Title")))
+                .andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -101,6 +102,7 @@ public class BlogControllerTest {
         when(blogService.findBlog(1L)).thenReturn(null);
 
         mockMvc.perform(get("/rest/blogs/1"))
+                .andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -121,6 +123,7 @@ public class BlogControllerTest {
                 .andExpect(jsonPath("$.title", is(entry.getTitle())))
                 .andExpect(jsonPath("$.links[*].href", hasItem(endsWith("rest/blog-entries/1"))))
                 .andExpect(header().string("Location", endsWith("rest/blog-entries/1")))
+                .andDo(print())
                 .andExpect(status().isCreated());
     }
 
@@ -132,6 +135,7 @@ public class BlogControllerTest {
         mockMvc.perform(post("/rest/blogs/1/blog-entries")
                 .content("{\"title\":\"Generic Title\"}")
                 .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isNotFound());
     }
 

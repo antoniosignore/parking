@@ -99,7 +99,12 @@ public class AccountRepoTest {
         Account dupantonio = new Account();
         dupantonio.setName("antonio");
         dupantonio.setPassword("grassissimo");
-        accountRepo.createAccount(dupantonio);
+
+        try {
+            accountRepo.createAccount(dupantonio);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         List<Account> allAccounts = accountRepo.findAllAccounts();
 

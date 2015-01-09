@@ -25,11 +25,6 @@ public class AccountGroupServiceImpl implements AccountGroupService {
         return new AccountGroupList(groupRepo.findAllGroups());
     }
 
-    @Override
-    public AccountGroupList findAllGroupsByAccount(Long accountId) {
-        Account account = accountRepo.findAccount(accountId);
-        return new AccountGroupList(account.getAccountGroups());
-    }
 
     @Override
     public AccountGroup findGroup(Long id) {

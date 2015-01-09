@@ -7,8 +7,6 @@ public interface AccountGroupService {
 
     public AccountGroupList findAllGroups();
 
-    public AccountGroupList findAllGroupsByAccount(Long accountId);
-
     public AccountGroup findGroup(Long id);
 
 }

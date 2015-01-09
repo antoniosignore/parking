@@ -22,18 +22,18 @@ angular.module('ngBoilerplate.blog', ['ui.router', 'ngResource', 'ngBoilerplate.
     .factory('blogService', function ($resource, $q) {
         var service = {};
         service.createBlog = function (accountId, blogData) {
-            var Blog = $resource("/basic-web-app/rest/accounts/:paramAccountId/blogs");
+            var Blog = $resource("/parking/rest/accounts/:paramAccountId/blogs");
             return Blog.save({paramAccountId: accountId}, blogData).$promise;
         };
         service.getAllBlogs = function () {
-            var Blog = $resource("/basic-web-app/rest/blogs");
+            var Blog = $resource("/parking/rest/blogs");
             return Blog.get().$promise.then(function (data) {
                 return data.blogs;
             });
         };
         service.getBlogsForAccount = function (accountId) {
             var deferred = $q.defer();
-            var Account = $resource("/basic-web-app/rest/accounts/:paramAccountId");
+            var Account = $resource("/parking/rest/accounts/:paramAccountId");
             Account.get({paramAccountId: accountId}, function (account) {
                 var Blog = account.resource('blogs');
                 Blog.get(null,
