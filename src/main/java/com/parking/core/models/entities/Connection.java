@@ -1,6 +1,7 @@
 package com.parking.core.models.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Connection {
@@ -9,18 +10,23 @@ public class Connection {
     @GeneratedValue
     private Long id;
 
+    @NotNull
     @OneToOne
     private Account initiator;
 
+    @NotNull
     @OneToOne
     private Account receiver;
 
+    @NotNull
     @OneToOne
     private AccountGroup initiatorGroup;
 
+    @NotNull
     @OneToOne
     private AccountGroup receiverGroup;
 
+    @NotNull
     private Boolean confirmed;
 
     public Connection() {

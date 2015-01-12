@@ -4,7 +4,7 @@ angular.module('ngBoilerplate.blog', ['ui.router', 'ngResource', 'ngBoilerplate.
             url: '/manage/blogs?accountId',
             views: {
                 'main': {
-                    templateUrl: 'blog/manage-blogs.tpl.html',
+                    templateUrl: 'blog/manage-blogs.tpl.html'   ,
                     controller: 'ManageBlogCtrl'
                 }
             },

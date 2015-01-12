@@ -31,7 +31,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -54,8 +53,6 @@ public class AccountControllerTest {
     private MockMvc mockMvc;
 
     private ArgumentCaptor<Account> accountCaptor;
-
-    UserDetails userDetails;
 
     @Before
     public void setup() {
@@ -101,6 +98,7 @@ public class AccountControllerTest {
         mockMvc.perform(get("/rest/accounts/1/blogs"))
                 .andExpect(jsonPath("$.blogs[*].title",
                         hasItems(endsWith("Title A"), endsWith("Title B"))))
+                .andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -123,6 +121,7 @@ public class AccountControllerTest {
         when(service.findBlogsByAccount(1L)).thenThrow(new AccountDoesNotExistException());
 
         mockMvc.perform(get("/rest/accounts/1/blogs"))
+                .andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -145,6 +144,7 @@ public class AccountControllerTest {
                 .andExpect(jsonPath("$.title", is("Test Title")))
                 .andExpect(jsonPath("$.links[*].href", hasItem(endsWith("/blogs/1"))))
                 .andExpect(header().string("Location", endsWith("/blogs/1")))
+                .andDo(print())
                 .andExpect(status().isCreated());
     }
 
@@ -159,6 +159,7 @@ public class AccountControllerTest {
         mockMvc.perform(post("/rest/accounts/1/blogs")
                 .content("{\"title\":\"Test Title\"}")
                 .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -173,6 +174,7 @@ public class AccountControllerTest {
         mockMvc.perform(post("/rest/accounts/1/blogs")
                 .content("{\"title\":\"Test Title\"}")
                 .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isConflict());
     }
 
@@ -190,6 +192,7 @@ public class AccountControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(header().string("Location", endsWith("/rest/accounts/1")))
                 .andExpect(jsonPath("$.name", is(createdAccount.getName())))
+                .andDo(print())
                 .andExpect(status().isCreated());
 
         verify(service).createAccount(accountCaptor.capture());
@@ -210,6 +213,7 @@ public class AccountControllerTest {
         mockMvc.perform(post("/rest/accounts")
                 .content("{\"name\":\"test\",\"password\":\"test\"}")
                 .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isConflict());
     }
 
@@ -228,6 +232,7 @@ public class AccountControllerTest {
                 .andExpect(jsonPath("$.name", is(foundAccount.getName())))
                 .andExpect(jsonPath("$.links[*].rel",
                         hasItems(endsWith("self"), endsWith("blogs"))))
+                .andDo(print())
                         .andExpect(status().isOk());
     }
 
@@ -236,6 +241,7 @@ public class AccountControllerTest {
         when(service.findAccount(1L)).thenReturn(null);
 
         mockMvc.perform(get("/rest/accounts/1"))
+                .andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -262,6 +268,7 @@ public class AccountControllerTest {
         mockMvc.perform(get("/rest/accounts"))
                 .andExpect(jsonPath("$.accounts[*].name",
                         hasItems(endsWith("accountA"), endsWith("accountB"))))
+                .andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -289,6 +296,7 @@ public class AccountControllerTest {
         mockMvc.perform(get("/rest/accounts").param("name", "accountA"))
                 .andExpect(jsonPath("$.accounts[*].name",
                         everyItem(endsWith("accountA"))))
+                .andDo(print())
                 .andExpect(status().isOk());
     }
 }

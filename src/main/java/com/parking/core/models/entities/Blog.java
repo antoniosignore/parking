@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Blog {
@@ -12,8 +13,10 @@ public class Blog {
     @GeneratedValue
     private Long id;
 
+    @NotNull
     private String title;
 
+    @NotNull
     @OneToOne
     private Account owner;
 
@@ -40,4 +43,6 @@ public class Blog {
     public void setOwner(Account owner) {
         this.owner = owner;
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.parking.core.models.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -10,14 +11,21 @@ public class Parking {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
+    @NotNull
+    @OneToOne
     private Account account;
 
+    @NotNull
     Date parkingDate;
 
     @OneToOne
     Account pickedBy;
 
+    @NotNull
+    @OneToOne
+    Vehicle vehicle;
+
+    @NotNull
     @Enumerated(EnumType.STRING)
     private ParkingStatusEnum status;
 
@@ -92,6 +100,14 @@ public class Parking {
 
     public void setLongitude(Long longitude) {
         this.longitude = longitude;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     @Override

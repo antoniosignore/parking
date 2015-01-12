@@ -1,6 +1,7 @@
 package com.parking.core.models.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,10 @@ public class Account {
     @GeneratedValue
     private Long id;
 
+    @NotNull
     private String name;
+
+    @NotNull
     private String password;
 
     public Long getId() {

@@ -1,0 +1,58 @@
+
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:8080/parking/rest/accounts
+
+{
+    "accounts": [
+        {
+            "name": "pippo",
+            "rid": 1,
+            "links": [
+                {
+                    "rel": "self",
+                    "href": "http://localhost:8080/parking/rest/accounts/1"
+                },
+                {
+                    "rel": "blogs",
+                    "href": "http://localhost:8080/parking/rest/accounts/1/blogs"
+                }
+            ]
+        },
+        {
+            "name": "sandokan",
+            "rid": 2,
+            "links": [
+                {
+                    "rel": "self",
+                    "href": "http://localhost:8080/parking/rest/accounts/2"
+                },
+                {
+                    "rel": "blogs",
+                    "href": "http://localhost:8080/parking/rest/accounts/2/blogs"
+                }
+            ]
+        }
+    ],
+    "links": []
+}
+
+
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:8080/parking/rest/accounts/1
+
+{
+    "name": "pippo",
+    "rid": 1,
+    "links": [
+        {
+            "rel": "self",
+            "href": "http://localhost:8080/parking/rest/accounts/1"
+        },
+        {
+            "rel": "blogs",
+            "href": "http://localhost:8080/parking/rest/accounts/1/blogs"
+        }
+    ]
+}
+
+
+
+
