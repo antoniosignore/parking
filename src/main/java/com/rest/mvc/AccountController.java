@@ -43,8 +43,7 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    @PreAuthorize("permitAll")
+    @RequestMapping(method = RequestMethod.GET) @PreAuthorize("permitAll")
     public ResponseEntity<AccountListResource> findAllAccounts(@RequestParam(value = "name", required = false) String name, @RequestParam(value = "password", required = false) String password) {
         AccountList list = null;
         if (name == null) {
@@ -66,8 +65,7 @@ public class AccountController {
         return new ResponseEntity<AccountListResource>(res, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    @PreAuthorize("permitAll")
+    @RequestMapping(method = RequestMethod.POST) @PreAuthorize("permitAll")
     public ResponseEntity<AccountResource> createAccount(
             @RequestBody AccountResource sentAccount
     ) {
@@ -82,9 +80,7 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(value = "/{accountId}",
-            method = RequestMethod.GET)
-    @PreAuthorize("permitAll")
+    @RequestMapping(value = "/{accountId}", method = RequestMethod.GET) @PreAuthorize("permitAll")
     public ResponseEntity<AccountResource> getAccount(
             @PathVariable Long accountId
     ) {
@@ -97,9 +93,7 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(value = "/{accountId}/blogs",
-            method = RequestMethod.POST)
-    @PreAuthorize("permitAll")
+    @RequestMapping(value = "/{accountId}/blogs", method = RequestMethod.POST) @PreAuthorize("permitAll")
     public ResponseEntity<BlogResource> createBlog(
             @PathVariable Long accountId,
             @RequestBody BlogResource res) {
@@ -127,8 +121,7 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(value = "/{accountId}/blogs",
-            method = RequestMethod.GET)
+    @RequestMapping(value = "/{accountId}/blogs", method = RequestMethod.GET)
     @PreAuthorize("permitAll")
     public ResponseEntity<BlogListResource> findAllBlogs(
             @PathVariable Long accountId) {

@@ -16,4 +16,5 @@ public class ConnectionListResource extends ResourceSupport {
     public void setConnections(List<ConnectionResource> connections) {
         this.connections = connections;
     }
+
 }

@@ -26,17 +26,15 @@ public class GroupController {
         this.accountGroupService = accountGroupService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    @PreAuthorize("permitAll")
-    public ResponseEntity<GroupListResource> findAllStocks() {
+    @RequestMapping(method = RequestMethod.GET) @PreAuthorize("permitAll")
+    public ResponseEntity<GroupListResource> findAllGroups() {
         AccountGroupList accountGroupList = accountGroupService.findAllGroups();
         GroupListResource groupListResource = new GroupListResourceAsm().toResource(accountGroupList);
         return new ResponseEntity<GroupListResource>(groupListResource, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{groupId}",
-            method = RequestMethod.GET)
-    public ResponseEntity<GroupResource> getStock(@PathVariable Long groupId) {
+    @RequestMapping(value = "/{groupId}", method = RequestMethod.GET)
+    public ResponseEntity<GroupResource> getGroup(@PathVariable Long groupId) {
         AccountGroup accountGroup = accountGroupService.findGroup(groupId);
         if (accountGroup != null) {
             GroupResource res = new GroupResourceAsm().toResource(accountGroup);

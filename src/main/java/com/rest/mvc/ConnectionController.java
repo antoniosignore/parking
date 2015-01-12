@@ -29,7 +29,7 @@ public class ConnectionController {
 
     @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("permitAll")
-    public ResponseEntity<ConnectionListResource> findAllStocks() {
+    public ResponseEntity<ConnectionListResource> findAllConnections() {
         ConnectionList connectionList = connectionService.findAllConnections();
         ConnectionListResource connectionListResource = new ConnectionListResourceAsm().toResource(connectionList);
         return new ResponseEntity<ConnectionListResource>(connectionListResource, HttpStatus.OK);
@@ -37,7 +37,7 @@ public class ConnectionController {
 
     @RequestMapping(value = "/{connectionId}",
             method = RequestMethod.GET)
-    public ResponseEntity<ConnectionResource> getStock(@PathVariable Long connectionId) {
+    public ResponseEntity<ConnectionResource> getConnection(@PathVariable Long connectionId) {
         Connection connection = connectionService.findConnection(connectionId);
         if (connection != null) {
             ConnectionResource res = new ConnectionResourceAsm().toResource(connection);

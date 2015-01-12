@@ -26,17 +26,15 @@ public class ParkingController {
         this.parkingService = parkingService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    @PreAuthorize("permitAll")
-    public ResponseEntity<ParkingListResource> findAllStocks() {
+    @RequestMapping(method = RequestMethod.GET) @PreAuthorize("permitAll")
+    public ResponseEntity<ParkingListResource> findAllParkings() {
         ParkingList parkingList = parkingService.findAllParkings();
         ParkingListResource parkingListResource = new ParkingListResourceAsm().toResource(parkingList);
         return new ResponseEntity<ParkingListResource>(parkingListResource, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{parkingId}",
-            method = RequestMethod.GET)
-    public ResponseEntity<ParkingResource> getStock(@PathVariable Long parkingId) {
+    @RequestMapping(value = "/{parkingId}", method = RequestMethod.GET)
+    public ResponseEntity<ParkingResource> getParking(@PathVariable Long parkingId) {
         Parking parking = parkingService.findParking(parkingId);
         if (parking != null) {
             ParkingResource res = new ParkingResourceAsm().toResource(parking);

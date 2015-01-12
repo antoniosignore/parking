@@ -16,4 +16,5 @@ public class GroupListResource extends ResourceSupport {
     public void setGroups(List<GroupResource> groups) {
         this.groups = groups;
     }
+
 }

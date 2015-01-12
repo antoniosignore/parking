@@ -30,4 +30,5 @@ public class BlogResource extends ResourceSupport {
         blog.setTitle(title);
         return blog;
     }
+
 }

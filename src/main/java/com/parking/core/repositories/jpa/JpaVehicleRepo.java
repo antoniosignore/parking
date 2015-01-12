@@ -34,9 +34,9 @@ public class JpaVehicleRepo implements VehicleRepo {
     }
 
     @Override
-    public Vehicle findVehicleByName(String title) {
-        Query query = em.createQuery("SELECT b from Vehicle b where b.title=?1");
-        query.setParameter(1, title);
+    public Vehicle findVehicleByName(String name) {
+        Query query = em.createQuery("SELECT b from Vehicle b where b.name=?1");
+        query.setParameter(1, name);
         List<Vehicle> vehicles = query.getResultList();
         if (vehicles.isEmpty()) {
             return null;

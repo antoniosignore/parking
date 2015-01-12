@@ -23,8 +23,7 @@ public class BlogEntryController {
         this.service = service;
     }
 
-    @RequestMapping(value = "/{blogEntryId}",
-            method = RequestMethod.GET)
+    @RequestMapping(value = "/{blogEntryId}", method = RequestMethod.GET)
     public ResponseEntity<BlogEntryResource> getBlogEntry(
             @PathVariable Long blogEntryId) {
         BlogEntry entry = service.findBlogEntry(blogEntryId);

@@ -16,7 +16,6 @@ public class ParkingResource extends ResourceSupport {
 
     Long longitude;
 
-
     private Long rid;
 
     public Long getRid() {

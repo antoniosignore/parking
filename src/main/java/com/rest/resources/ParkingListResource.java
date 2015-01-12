@@ -9,7 +9,6 @@ public class ParkingListResource extends ResourceSupport {
 
     private List<ParkingResource> parkings = new ArrayList<ParkingResource>();
 
-
     public List<ParkingResource> getParkings() {
         return parkings;
     }
@@ -17,4 +16,5 @@ public class ParkingListResource extends ResourceSupport {
     public void setParkings(List<ParkingResource> parkings) {
         this.parkings = parkings;
     }
+
 }
