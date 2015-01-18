@@ -1,18 +1,13 @@
 package com.parking.core.services.impl;
 
-import com.parking.core.models.entities.AccountGroup;
-import com.parking.core.models.entities.Parking;
+import com.parking.core.models.entities.*;
+import com.parking.core.services.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.parking.core.models.entities.Account;
-import com.parking.core.models.entities.Blog;
 import com.parking.core.repositories.*;
 import com.parking.core.services.AccountService;
 import com.parking.core.services.exceptions.*;
-import com.parking.core.services.util.AccountList;
-import com.parking.core.services.util.BlogList;
-import com.parking.core.services.util.AccountGroupList;
 
 @Service
 @Transactional
@@ -25,7 +20,13 @@ public class AccountServiceImpl implements AccountService {
     private BlogRepo blogRepo;
 
     @Autowired
-    private GroupRepo groupRepo;
+    private AccountGroupRepo accountGroupRepo;
+
+    @Autowired
+    private ConnectionRepo connectionRepo;
+
+    @Autowired
+    private ParkingRepo parkingRepo;
 
     @Override
     public Account findAccount(Long id) {
@@ -62,7 +63,47 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountGroup createGroup(Long accountId, AccountGroup accountGroup) {
+    public Connection createConnection(Long initiatorId, Long receiverId, Connection data){
+
+        Connection connection = connectionRepo.findByInitiatorReceiver(initiatorId, receiverId);
+        if (connection != null) {
+            throw new ConnectionExistsException();
+        }
+
+        Account initiator = accountRepo.findAccount(initiatorId);
+        if (initiator == null) {
+            throw new AccountDoesNotExistException();
+        }
+
+        Account receiver = accountRepo.findAccount(receiverId);
+        if (receiver == null) {
+            throw new AccountDoesNotExistException();
+        }
+
+        data.setInitiator(initiator);
+        data.setReceiver(receiver);
+
+        Connection createdBlog = connectionRepo.createConnection(data);
+
+        return createdBlog;
+    }
+
+    @Override
+    public Parking createParking(Long accountId, Parking data){
+        Account account = accountRepo.findAccount(accountId);
+        if (account == null) throw new AccountDoesNotExistException();
+        try {
+            data = parkingRepo.createParking(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new GroupExistsException();
+        }
+        return data;
+    }
+
+
+    @Override
+    public AccountGroup createAccountGroup(Long accountId, AccountGroup accountGroup) {
 
         Account account = accountRepo.findAccount(accountId);
         if (account == null) throw new AccountDoesNotExistException();
@@ -71,7 +112,7 @@ public class AccountServiceImpl implements AccountService {
 
         AccountGroup group = null;
         try {
-            group = groupRepo.createGroup(accountGroup);
+            group = accountGroupRepo.createAccountGroup(accountGroup);
         } catch (Exception e) {
             e.printStackTrace();
             throw new GroupExistsException();
@@ -89,7 +130,25 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountGroupList findGroupsByAccount(Long accountId) {
+    public ParkingList findParkingsByAccount(Long accountId) {
+        Parking parking = parkingRepo.findParking(accountId);
+        if (parking == null) {
+            throw new ParkingDoesNotExistException();
+        }
+        return new ParkingList(parkingRepo.findParkingsByAccount(accountId));
+    }
+
+    @Override
+    public ConnectionList findConnectionsByAccount(Long accountId) {
+        Connection parking = connectionRepo.findConnection(accountId);
+        if (parking == null) {
+            throw new ConnectionDoesNotExistException();
+        }
+        return new ConnectionList(connectionRepo.findConnectionsByAccountId(accountId));
+    }
+
+    @Override
+    public AccountGroupList findAccountGroupsByAccount(Long accountId) {
         Account account = accountRepo.findAccount(accountId);
         if (account == null) {
             throw new AccountDoesNotExistException();

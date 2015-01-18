@@ -1,22 +1,19 @@
 package com.parking.core.repositories.jpa;
 
-import com.parking.core.models.entities.Account;
 import com.parking.core.models.entities.AccountGroup;
+import com.parking.core.models.entities.BlogEntry;
 import com.parking.core.repositories.AccountRepo;
-import com.parking.core.repositories.GroupRepo;
+import com.parking.core.repositories.AccountGroupRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 @Repository
-public class jpaGroupRepo implements GroupRepo {
+public class JpaAccountGroupRepo implements AccountGroupRepo {
     
     @PersistenceContext
     private EntityManager em;
@@ -25,24 +22,24 @@ public class jpaGroupRepo implements GroupRepo {
     AccountRepo accountRepo;
 
     @Override
-    public AccountGroup createGroup(AccountGroup data) {
+    public AccountGroup createAccountGroup(AccountGroup data) {
         em.persist(data);
         return data;
     }
 
     @Override
-    public List<AccountGroup> findAllGroups() {
+    public List<AccountGroup> findAllAccountGroups() {
         Query query = em.createQuery("SELECT b from AccountGroup b");
         return query.getResultList();
     }
 
     @Override
-    public AccountGroup findGroup(Long id) {
+    public AccountGroup findAccountGroup(Long id) {
         return em.find(AccountGroup.class, id);
     }
 
     @Override
-    public AccountGroup findGroupByName(String title) {
+    public AccountGroup findAccountGroupByName(String title) {
         Query query = em.createQuery("SELECT b from AccountGroup b where b.groupName=?1");
         query.setParameter(1, title);
         List<AccountGroup> accountGroups = query.getResultList();
@@ -52,5 +49,19 @@ public class jpaGroupRepo implements GroupRepo {
             return accountGroups.get(0);
         }
     }
+
+    public AccountGroup deleteAccountGroupEntry(Long id){
+        AccountGroup entry = em.find(AccountGroup.class, id);
+        em.remove(entry);
+        return entry;
+    }
+
+    public AccountGroup updateAccountGroupEntry(Long id, AccountGroup data){
+        AccountGroup entry = em.find(AccountGroup.class, id);
+        entry.setGroupDesc(data.getGroupDesc());
+        entry.setGroupName(data.getGroupName());
+        return entry;
+    }
+
 
 }

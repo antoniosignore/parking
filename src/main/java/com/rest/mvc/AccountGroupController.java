@@ -1,7 +1,7 @@
 package com.rest.mvc;
 
 import com.parking.core.models.entities.AccountGroup;
-import com.rest.resources.asm.GroupListResourceAsm;
+import com.rest.resources.asm.AccountGroupListResourceAsm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,35 +12,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.parking.core.services.AccountGroupService;
 import com.parking.core.services.util.AccountGroupList;
-import com.rest.resources.GroupListResource;
-import com.rest.resources.GroupResource;
-import com.rest.resources.asm.GroupResourceAsm;
+import com.rest.resources.AccountGroupListResource;
+import com.rest.resources.AccountGroupResource;
+import com.rest.resources.asm.AccountGroupResourceAsm;
 
 @Controller
 @RequestMapping("/rest/groups")
-public class GroupController {
+public class AccountGroupController {
     private AccountGroupService accountGroupService;
 
     @Autowired
-    public GroupController(AccountGroupService accountGroupService) {
+    public AccountGroupController(AccountGroupService accountGroupService) {
         this.accountGroupService = accountGroupService;
     }
 
     @RequestMapping(method = RequestMethod.GET) @PreAuthorize("permitAll")
-    public ResponseEntity<GroupListResource> findAllGroups() {
+    public ResponseEntity<AccountGroupListResource> findAllGroups() {
         AccountGroupList accountGroupList = accountGroupService.findAllGroups();
-        GroupListResource groupListResource = new GroupListResourceAsm().toResource(accountGroupList);
-        return new ResponseEntity<GroupListResource>(groupListResource, HttpStatus.OK);
+        AccountGroupListResource accountGroupListResource = new AccountGroupListResourceAsm().toResource(accountGroupList);
+        return new ResponseEntity<AccountGroupListResource>(accountGroupListResource, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{groupId}", method = RequestMethod.GET)
-    public ResponseEntity<GroupResource> getGroup(@PathVariable Long groupId) {
+    public ResponseEntity<AccountGroupResource> getGroup(@PathVariable Long groupId) {
         AccountGroup accountGroup = accountGroupService.findGroup(groupId);
         if (accountGroup != null) {
-            GroupResource res = new GroupResourceAsm().toResource(accountGroup);
-            return new ResponseEntity<GroupResource>(res, HttpStatus.OK);
+            AccountGroupResource res = new AccountGroupResourceAsm().toResource(accountGroup);
+            return new ResponseEntity<AccountGroupResource>(res, HttpStatus.OK);
         } else {
-            return new ResponseEntity<GroupResource>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<AccountGroupResource>(HttpStatus.NOT_FOUND);
         }
     }
 

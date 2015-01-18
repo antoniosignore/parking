@@ -1,5 +1,21 @@
 package com.rest.mvc;
 
+import com.parking.core.models.entities.Account;
+import com.parking.core.models.entities.AccountGroup;
+import com.parking.core.models.entities.Blog;
+import com.parking.core.services.AccountGroupService;
+import com.parking.core.services.AccountService;
+import com.parking.core.services.exceptions.AccountDoesNotExistException;
+import com.parking.core.services.exceptions.AccountExistsException;
+import com.parking.core.services.exceptions.BlogExistsException;
+import com.parking.core.services.util.AccountGroupList;
+import com.parking.core.services.util.AccountList;
+import com.parking.core.services.util.BlogList;
+import com.rest.exceptions.ConflictException;
+import com.rest.exceptions.ForbiddenException;
+import com.rest.exceptions.NotFoundException;
+import com.rest.resources.*;
+import com.rest.resources.asm.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -9,25 +25,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import com.parking.core.models.entities.Account;
-import com.parking.core.models.entities.Blog;
-import com.parking.core.services.AccountService;
-import com.parking.core.services.exceptions.AccountDoesNotExistException;
-import com.parking.core.services.exceptions.AccountExistsException;
-import com.parking.core.services.exceptions.BlogExistsException;
-import com.parking.core.services.util.AccountList;
-import com.parking.core.services.util.BlogList;
-import com.rest.exceptions.ConflictException;
-import com.rest.exceptions.ForbiddenException;
-import com.rest.exceptions.NotFoundException;
-import com.rest.resources.AccountListResource;
-import com.rest.resources.AccountResource;
-import com.rest.resources.BlogListResource;
-import com.rest.resources.BlogResource;
-import com.rest.resources.asm.AccountListResourceAsm;
-import com.rest.resources.asm.AccountResourceAsm;
-import com.rest.resources.asm.BlogListResourceAsm;
-import com.rest.resources.asm.BlogResourceAsm;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -36,14 +33,20 @@ import java.util.Arrays;
 @Controller
 @RequestMapping("/rest/accounts")
 public class AccountController {
+
+    @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private AccountGroupService accountGroupService;
 
     @Autowired
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
 
-    @RequestMapping(method = RequestMethod.GET) @PreAuthorize("permitAll")
+    @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("permitAll")
     public ResponseEntity<AccountListResource> findAllAccounts(@RequestParam(value = "name", required = false) String name, @RequestParam(value = "password", required = false) String password) {
         AccountList list = null;
         if (name == null) {
@@ -65,10 +68,10 @@ public class AccountController {
         return new ResponseEntity<AccountListResource>(res, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST) @PreAuthorize("permitAll")
+    @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("permitAll")
     public ResponseEntity<AccountResource> createAccount(
-            @RequestBody AccountResource sentAccount
-    ) {
+            @RequestBody AccountResource sentAccount) {
         try {
             Account createdAccount = accountService.createAccount(sentAccount.toAccount());
             AccountResource res = new AccountResourceAsm().toResource(createdAccount);
@@ -80,10 +83,10 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(value = "/{accountId}", method = RequestMethod.GET) @PreAuthorize("permitAll")
+    @RequestMapping(value = "/{accountId}", method = RequestMethod.GET)
+    @PreAuthorize("permitAll")
     public ResponseEntity<AccountResource> getAccount(
-            @PathVariable Long accountId
-    ) {
+            @PathVariable Long accountId) {
         Account account = accountService.findAccount(accountId);
         if (account != null) {
             AccountResource res = new AccountResourceAsm().toResource(account);
@@ -93,7 +96,8 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(value = "/{accountId}/blogs", method = RequestMethod.POST) @PreAuthorize("permitAll")
+    @RequestMapping(value = "/{accountId}/blogs", method = RequestMethod.POST)
+    @PreAuthorize("permitAll")
     public ResponseEntity<BlogResource> createBlog(
             @PathVariable Long accountId,
             @RequestBody BlogResource res) {
@@ -133,6 +137,50 @@ public class AccountController {
             throw new NotFoundException(exception);
         }
     }
+
+
+    @RequestMapping(value = "/{accountId}/groups", method = RequestMethod.POST)
+    @PreAuthorize("permitAll")
+    public ResponseEntity<AccountGroupResource> createAccountGroup(
+            @PathVariable Long accountId,
+            @RequestBody AccountGroupResource res) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            UserDetails details = (UserDetails) principal;
+            Account loggedIn = accountService.findByAccountName(details.getUsername());
+            if (loggedIn.getId() == accountId) {
+                try {
+                    AccountGroup createdAccountGroup = accountService.createAccountGroup(accountId, res.toAccountGroup());
+                    AccountGroupResource accountGroupResource = new AccountGroupResourceAsm().toResource(createdAccountGroup);
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setLocation(URI.create(accountGroupResource.getLink("self").getHref()));
+                    return new ResponseEntity<AccountGroupResource>(accountGroupResource, headers, HttpStatus.CREATED);
+                } catch (AccountDoesNotExistException exception) {
+                    throw new NotFoundException(exception);
+                } catch (BlogExistsException exception) {
+                    throw new ConflictException(exception);
+                }
+            } else {
+                throw new ForbiddenException();
+            }
+        } else {
+            throw new ForbiddenException();
+        }
+    }
+
+    @RequestMapping(value = "/{accountId}/groups", method = RequestMethod.GET)
+    @PreAuthorize("permitAll")
+    public ResponseEntity<AccountGroupListResource> findAllAccountGroups(
+            @PathVariable Long accountId) {
+        try {
+            AccountGroupList blogList = accountService.findAccountGroupsByAccount(accountId);
+            AccountGroupListResource blogListRes = new AccountGroupListResourceAsm().toResource(blogList);
+            return new ResponseEntity<AccountGroupListResource>(blogListRes, HttpStatus.OK);
+        } catch (AccountDoesNotExistException exception) {
+            throw new NotFoundException(exception);
+        }
+    }
+
 
 
 }

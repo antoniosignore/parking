@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>OAUTH TEST</title>
+    <meta charset='utf-8' />
+    <link rel="stylesheet" src="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://apis.google.com/js/client.js"></script>
+
+    <script type="text/javascript">
+        var PROJECT_ID = 'tidy-tract-827';
+        var CLIENT_ID = '993326518312-uomh6bp2kiqfmeg2uha5kc3c41sdmhf9.apps.googleusercontent.com';
+        var API_KEY = 'LZ4Xrw6lxa5rsFyqv4oHFSSm';
+        var SCOPES = 'https://www.googleapis.com/auth/compute';
+
+        /**
+         * Authorize Google Compute Engine API.
+         */
+        function authorization() {
+            gapi.client.setApiKey(API_KEY);
+            gapi.auth.authorize({
+                        client_id: CLIENT_ID,
+                        scope: SCOPES,
+                        immediate: false
+                    }, function(authResult) {
+                        if (authResult && !authResult.error) {
+                            window.alert('Auth was successful!');
+                        } else {
+                            window.alert('Auth was not successful');
+                        }
+                    }
+            );
+        }
+
+        /**
+         * Driver for sample application.
+         */
+        $(window).load(authorization);
+    </script>
+
+
+</head>
+<body>
+</body>
+</html>

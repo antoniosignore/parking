@@ -3,7 +3,6 @@ package com.parking.core.repositories;
 import com.parking.core.models.entities.Account;
 import com.parking.core.models.entities.AccountGroup;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +18,13 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/business-config.xml")
-public class GroupRepoTest {
+public class AccountGroupRepoTest {
 
     @Autowired
     private AccountRepo accountRepo;
 
     @Autowired
-    private GroupRepo groupRepo;
+    private AccountGroupRepo accountGroupRepo;
 
     private Account antonio;
     private Account mida;
@@ -48,14 +47,14 @@ public class GroupRepoTest {
         family = new AccountGroup();
         family.setGroupName("family");
         family.setGroupDesc("la mia famiglia");
-        groupRepo.createGroup(family);
+        accountGroupRepo.createAccountGroup(family);
 
-        groupRepo.createGroup(family);
+        accountGroupRepo.createAccountGroup(family);
 
         friends = new AccountGroup();
         friends.setGroupName("friends");
         friends.setGroupDesc("I miei amici");
-        groupRepo.createGroup(friends);
+        accountGroupRepo.createAccountGroup(friends);
 
         antonio.addAccountGroup(family);
         antonio.addAccountGroup(friends);
@@ -70,7 +69,7 @@ public class GroupRepoTest {
     @Test
     @Transactional
     public void testFind() {
-        AccountGroup AccountGroup = groupRepo.findGroup(this.family.getId());
+        AccountGroup AccountGroup = accountGroupRepo.findAccountGroup(this.family.getId());
         assertNotNull(AccountGroup);
         assertEquals(AccountGroup.getGroupName(), "family");
     }
@@ -78,7 +77,7 @@ public class GroupRepoTest {
     @Test
     @Transactional
     public void testFindAllGroups() {
-        List<AccountGroup> accountGroups = groupRepo.findAllGroups();
+        List<AccountGroup> accountGroups = accountGroupRepo.findAllAccountGroups();
         assertNotNull(accountGroups);
         assertEquals(accountGroups.size(), 2);
     }

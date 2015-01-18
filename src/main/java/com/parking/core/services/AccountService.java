@@ -1,11 +1,7 @@
 package com.parking.core.services;
 
-import com.parking.core.models.entities.Account;
-import com.parking.core.models.entities.Blog;
-import com.parking.core.models.entities.AccountGroup;
-import com.parking.core.services.util.AccountList;
-import com.parking.core.services.util.BlogList;
-import com.parking.core.services.util.AccountGroupList;
+import com.parking.core.models.entities.*;
+import com.parking.core.services.util.*;
 
 public interface AccountService {
 
@@ -13,13 +9,23 @@ public interface AccountService {
 
     public Account createAccount(Account data);
 
-    public Blog createBlog(Long parkingId, Blog data);
 
-    public AccountGroup createGroup(Long accountId, AccountGroup data);
+    public AccountGroup createAccountGroup(Long accountId, AccountGroup data);
+
+    public Blog createBlog(Long accountId, Blog data);
+
+    public Connection createConnection(Long initiatorId, Long receiverId, Connection data);
+
+    public Parking createParking(Long accountId, Parking data);
 
     public BlogList findBlogsByAccount(Long accountId);
 
-    public AccountGroupList findGroupsByAccount(Long accountId);
+    public ParkingList findParkingsByAccount(Long accountId);
+
+    public ConnectionList findConnectionsByAccount(Long accountId);
+
+
+    public AccountGroupList findAccountGroupsByAccount(Long accountId);
 
     public AccountList findAllAccounts();
 

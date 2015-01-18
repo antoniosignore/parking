@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -27,7 +26,7 @@ public class AccountRepoTest {
     private AccountRepo accountRepo;
 
     @Autowired
-    private GroupRepo groupRepo;
+    private AccountGroupRepo accountGroupRepo;
 
     private Account antonio;
     private Account mida;
@@ -50,12 +49,12 @@ public class AccountRepoTest {
         family = new AccountGroup();
         family.setGroupName("family");
         family.setGroupDesc("la mia famiglia");
-        groupRepo.createGroup(family);
+        accountGroupRepo.createAccountGroup(family);
 
         friends = new AccountGroup();
         friends.setGroupName("friends");
         friends.setGroupDesc("I miei amici");
-        groupRepo.createGroup(friends);
+        accountGroupRepo.createAccountGroup(friends);
 
         antonio.addAccountGroup(family);
         antonio.addAccountGroup(friends);

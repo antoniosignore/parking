@@ -1,6 +1,7 @@
 package com.parking.core.repositories.jpa;
 
 import com.parking.core.models.entities.Connection;
+import com.parking.core.models.entities.Parking;
 import com.parking.core.repositories.ConnectionRepo;
 import org.springframework.stereotype.Repository;
 
@@ -35,15 +36,23 @@ public class JpaConnectionRepo implements ConnectionRepo{
 
     @Override
     public List<Connection> findConnectionByAccountName(String name) {
-
-        /*
-        Query query = em.createQuery("SELECT b from AccountGroup b where b.groupName=?1");
-        query.setParameter(1, title);
-        List<AccountGroup> accountGroups = query.getResultList();
-         */
         Query query = em.createQuery("SELECT b from Connection b where b.initiator.name=?1");
         query.setParameter(1, name);
         return query.getResultList();
+    }
 
+    @Override
+    public Connection findByInitiatorReceiver(Long initiatorId, Long receiverId) {
+        Query query = em.createQuery("SELECT b from Connection b where b.initiator.id=?1 and b.receiver.id=?2");
+        query.setParameter(1, initiatorId);
+        query.setParameter(2, receiverId);
+        return (Connection)query.getSingleResult();
+    }
+
+    @Override
+    public List<Connection> findConnectionsByAccountId(Long accountId) {
+        Query query = em.createQuery("SELECT a FROM Connection a WHERE a.initiator.id=?1");
+        query.setParameter(1, accountId);
+        return query.getResultList();
     }
 }

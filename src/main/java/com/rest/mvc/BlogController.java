@@ -38,16 +38,14 @@ public class BlogController {
         this.blogService = blogService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    @PreAuthorize("permitAll")
+    @RequestMapping(method = RequestMethod.GET) @PreAuthorize("permitAll")
     public ResponseEntity<BlogListResource> findAllBlogs() {
         BlogList blogList = blogService.findAllBlogs();
         BlogListResource blogListRes = new BlogListResourceAsm().toResource(blogList);
         return new ResponseEntity<BlogListResource>(blogListRes, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{blogId}",
-            method = RequestMethod.GET)
+    @RequestMapping(value = "/{blogId}", method = RequestMethod.GET)
     public ResponseEntity<BlogResource> getBlog(@PathVariable Long blogId) {
         Blog blog = blogService.findBlog(blogId);
         if (blog != null) {
@@ -58,8 +56,7 @@ public class BlogController {
         }
     }
 
-    @RequestMapping(value = "/{blogId}/blog-entries",
-            method = RequestMethod.POST)
+    @RequestMapping(value = "/{blogId}/blog-entries", method = RequestMethod.POST)
     public ResponseEntity<BlogEntryResource> createBlogEntry(
             @PathVariable Long blogId,
             @RequestBody BlogEntryResource sentBlogEntry

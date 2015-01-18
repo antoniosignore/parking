@@ -13,4 +13,8 @@ public interface ConnectionRepo {
     public Connection createConnection(Connection data);
 
     List<Connection> findConnectionByAccountName(String name);
+
+    Connection findByInitiatorReceiver(Long initiatorId, Long receiverId);
+
+    public List<Connection> findConnectionsByAccountId(Long accountId);
 }

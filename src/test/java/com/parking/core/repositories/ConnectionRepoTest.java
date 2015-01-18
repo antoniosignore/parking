@@ -10,9 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -25,7 +23,7 @@ public class ConnectionRepoTest {
     private AccountRepo accountRepo;
 
     @Autowired
-    private GroupRepo groupRepo;
+    private AccountGroupRepo accountGroupRepo;
 
     @Autowired
     private ConnectionRepo connectionRepo;
@@ -50,12 +48,12 @@ public class ConnectionRepoTest {
         friends = new AccountGroup();
         friends.setGroupName("friends");
         friends.setGroupDesc("I miei amici");
-        groupRepo.createGroup(friends);
+        accountGroupRepo.createAccountGroup(friends);
 
         family = new AccountGroup();
         family.setGroupName("colleghi");
         family.setGroupDesc("I miei amici");
-        groupRepo.createGroup(family);
+        accountGroupRepo.createAccountGroup(family);
 
         antonio.addAccountGroup(friends);
         antonio.addAccountGroup(family);

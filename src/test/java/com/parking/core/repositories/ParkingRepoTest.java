@@ -28,7 +28,7 @@ public class ParkingRepoTest {
     private ParkingRepo parkingRepo;
 
     @Autowired
-    private GroupRepo groupRepo;
+    private AccountGroupRepo accountGroupRepo;
 
     @Autowired
     private ConnectionRepo connectionRepo;
@@ -53,12 +53,12 @@ public class ParkingRepoTest {
         friends = new AccountGroup();
         friends.setGroupName("friends");
         friends.setGroupDesc("I miei amici");
-        groupRepo.createGroup(friends);
+        accountGroupRepo.createAccountGroup(friends);
 
         family = new AccountGroup();
         family.setGroupName("colleghi");
         family.setGroupDesc("I miei amici");
-        groupRepo.createGroup(family);
+        accountGroupRepo.createAccountGroup(family);
 
         antonio.addAccountGroup(friends);
         antonio.addAccountGroup(family);

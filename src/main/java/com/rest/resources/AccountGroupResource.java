@@ -3,7 +3,7 @@ package com.rest.resources;
 import com.parking.core.models.entities.AccountGroup;
 import org.springframework.hateoas.ResourceSupport;
 
-public class GroupResource extends ResourceSupport {
+public class AccountGroupResource extends ResourceSupport {
 
     private String groupName;
 
@@ -35,7 +35,7 @@ public class GroupResource extends ResourceSupport {
         this.groupDescription = groupDescription;
     }
 
-    public AccountGroup toGroup() {
+    public AccountGroup toAccountGroup() {
         AccountGroup accountGroup = new AccountGroup();
         accountGroup.setGroupName(groupName);
         accountGroup.setGroupDesc(groupDescription);
