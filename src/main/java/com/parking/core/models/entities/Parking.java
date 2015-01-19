@@ -11,21 +11,17 @@ public class Parking {
     @GeneratedValue
     private Long id;
 
-    @NotNull
-    @OneToOne
+    @ManyToOne
     private Account account;
 
     @NotNull
     Date parkingDate;
 
-    @OneToOne
     Account pickedBy;
 
-    @NotNull
     @OneToOne
     Vehicle vehicle;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     private ParkingStatusEnum status;
 

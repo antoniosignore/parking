@@ -14,12 +14,10 @@ public class Vehicle {
     @NotNull
     private String name;
 
-    @NotNull
     @Size(min = 2, max = 14)
     private String licensePlate;
 
-    @NotNull
-    @OneToOne
+    @ManyToOne
     private Account owner;
 
     public Vehicle() {

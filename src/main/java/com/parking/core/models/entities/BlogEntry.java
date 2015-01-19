@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class BlogEntry {
@@ -12,8 +13,10 @@ public class BlogEntry {
     @GeneratedValue
     private Long id;
 
+    @NotNull
     private String title;
 
+    @NotNull
     private String content;
 
     @ManyToOne

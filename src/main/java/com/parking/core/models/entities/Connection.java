@@ -10,23 +10,18 @@ public class Connection {
     @GeneratedValue
     private Long id;
 
-    @NotNull
-    @OneToOne
+    @ManyToOne
     private Account initiator;
 
-    @NotNull
     @OneToOne
     private Account receiver;
 
-    @NotNull
     @OneToOne
     private AccountGroup initiatorGroup;
 
-    @NotNull
     @OneToOne
     private AccountGroup receiverGroup;
 
-    @NotNull
     private Boolean confirmed;
 
     public Connection() {

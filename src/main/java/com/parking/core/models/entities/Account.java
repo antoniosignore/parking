@@ -57,6 +57,7 @@ public class Account {
         accountGroups.add(group);
     }
 
+
     public void removeAccountGroup(AccountGroup group){
         accountGroups.remove(group);
     }
