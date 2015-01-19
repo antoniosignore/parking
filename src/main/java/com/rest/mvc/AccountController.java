@@ -33,25 +33,15 @@ public class AccountController {
     private AccountService accountService;
 
     @Autowired
-    private ParkingService parkingService;
-
-    @Autowired
-    private ConnectionService connectionService;
-
-    @Autowired
-    private VehicleService vehicleService;
-
-    @Autowired
-    private AccountGroupService accountGroupService;
-
-    @Autowired
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("permitAll")
-    public ResponseEntity<AccountListResource> findAllAccounts(@RequestParam(value = "name", required = false) String name, @RequestParam(value = "password", required = false) String password) {
+    public ResponseEntity<AccountListResource> findAllAccounts(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "password", required = false) String password) {
         AccountList list = null;
         if (name == null) {
             list = accountService.findAllAccounts();
@@ -184,10 +174,6 @@ public class AccountController {
         }
     }
 
-
-    /*
-res.add(linkTo(methodOn(AccountController.class).findAllParkings(account.getId())).withRel("parkings"));
-*/
     @RequestMapping(value = "/{accountId}/parkings", method = RequestMethod.POST)
     @PreAuthorize("permitAll")
     public ResponseEntity<ParkingResource> createParking(
@@ -230,9 +216,6 @@ res.add(linkTo(methodOn(AccountController.class).findAllParkings(account.getId()
         }
     }
 
-    /*
-    res.add(linkTo(methodOn(AccountController.class).findAllConnections(account.getId())).withRel("connections"));
-     */
     @RequestMapping(value = "/{accountId}/connections", method = RequestMethod.POST)
     @PreAuthorize("permitAll")
     public ResponseEntity<ConnectionResource> createConnection(
@@ -276,14 +259,10 @@ res.add(linkTo(methodOn(AccountController.class).findAllParkings(account.getId()
         }
     }
 
-    /*
-res.add(linkTo(methodOn(AccountController.class).findAllVehicles(account.getId())).withRel("vehicles"));
-     */
     @RequestMapping(value = "/{accountId}/vehicles", method = RequestMethod.POST)
     @PreAuthorize("permitAll")
     public ResponseEntity<VehicleResource> createVehicle(
             @PathVariable Long accountId,
-//            @PathVariable Long receiverId,
             @RequestBody VehicleResource res) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
