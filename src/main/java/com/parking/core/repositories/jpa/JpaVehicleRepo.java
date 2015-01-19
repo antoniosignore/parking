@@ -46,7 +46,7 @@ public class JpaVehicleRepo implements VehicleRepo {
     }
 
     @Override
-    public List<Vehicle> findVehiclesByAccount(Long accountId) {
+    public List<Vehicle> findVehiclesByAccountId(Long accountId) {
         Query query = em.createQuery("SELECT b from Vehicle b where b.owner.id=?1");
         query.setParameter(1, accountId);
         return query.getResultList();

@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface ConnectionService {
 
+//    public Connection createConnection(Connection data);
+
     public ConnectionList findAllConnections();
 
     public Connection findConnection(Long id);

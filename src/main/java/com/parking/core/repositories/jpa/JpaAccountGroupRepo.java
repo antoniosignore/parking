@@ -1,7 +1,6 @@
 package com.parking.core.repositories.jpa;
 
 import com.parking.core.models.entities.AccountGroup;
-import com.parking.core.models.entities.BlogEntry;
 import com.parking.core.repositories.AccountRepo;
 import com.parking.core.repositories.AccountGroupRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +55,8 @@ public class JpaAccountGroupRepo implements AccountGroupRepo {
         return entry;
     }
 
-    public AccountGroup updateAccountGroupEntry(Long id, AccountGroup data){
-        AccountGroup entry = em.find(AccountGroup.class, id);
+    public AccountGroup updateAccountGroupEntry(Long accountGroupId, AccountGroup data){
+        AccountGroup entry = em.find(AccountGroup.class, accountGroupId);
         entry.setGroupDesc(data.getGroupDesc());
         entry.setGroupName(data.getGroupName());
         return entry;

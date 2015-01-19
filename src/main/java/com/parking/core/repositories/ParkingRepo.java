@@ -14,4 +14,6 @@ public interface ParkingRepo {
 
     public List<Parking> findParkingsByAccount(Long accountId);
 
+    public List<Parking> findParkingsByAccountName(String name);
+
 }

@@ -1,5 +1,6 @@
 package com.parking.core.repositories.jpa;
 
+import com.parking.core.models.entities.Connection;
 import com.parking.core.models.entities.Parking;
 import com.parking.core.repositories.ParkingRepo;
 import org.springframework.stereotype.Repository;
@@ -38,5 +39,12 @@ public class JpaParkingRepo implements ParkingRepo {
         em.persist(data);
         em.flush();
         return data;
+    }
+
+    public List<Parking> findParkingsByAccountName(String name){
+        Query query = em.createQuery("SELECT a FROM Parking a WHERE a.account.name=?1");
+        query.setParameter(1, name);
+        return query.getResultList();
+
     }
 }

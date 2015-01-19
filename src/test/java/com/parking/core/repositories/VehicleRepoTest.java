@@ -1,7 +1,6 @@
 package com.parking.core.repositories;
 
 import com.parking.core.models.entities.Account;
-import com.parking.core.models.entities.AccountGroup;
 import com.parking.core.models.entities.Vehicle;
 import org.junit.Before;
 import org.junit.Test;
@@ -87,7 +86,7 @@ public class VehicleRepoTest {
     @Transactional
     public void testFindAllVehiclesByAccounts() {
 
-        List<Vehicle> allVehicles = vehicleRepo.findVehiclesByAccount(antonio.getId());
+        List<Vehicle> allVehicles = vehicleRepo.findVehiclesByAccountId(antonio.getId());
         assertEquals(2, allVehicles.size());
 
     }

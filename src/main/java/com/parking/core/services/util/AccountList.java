@@ -20,4 +20,5 @@ public class AccountList {
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
     }
+
 }

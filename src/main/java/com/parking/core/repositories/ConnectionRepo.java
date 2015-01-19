@@ -6,15 +6,17 @@ import java.util.List;
 
 public interface ConnectionRepo {
 
+    public Connection createConnection(Connection data);
+
     public List<Connection> findAllConnections();
 
     public Connection findConnection(Long id);
 
-    public Connection createConnection(Connection data);
+    public List<Connection> findConnectionsByAccountName(String name);
 
-    List<Connection> findConnectionByAccountName(String name);
-
-    Connection findByInitiatorReceiver(Long initiatorId, Long receiverId);
+    public Connection findByInitiatorReceiver(Long initiatorId, Long receiverId);
 
     public List<Connection> findConnectionsByAccountId(Long accountId);
+
+    public Connection findConnectionByAccountNames(String initiatorName, String receiverName);
 }

@@ -5,6 +5,7 @@ import org.springframework.hateoas.ResourceSupport;
 import java.util.List;
 
 public class BlogEntryListResource extends ResourceSupport {
+
     private List<BlogEntryResource> entries;
 
     public List<BlogEntryResource> getEntries() {
@@ -14,4 +15,5 @@ public class BlogEntryListResource extends ResourceSupport {
     public void setEntries(List<BlogEntryResource> entries) {
         this.entries = entries;
     }
+
 }

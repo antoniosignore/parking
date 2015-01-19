@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlogListResource extends ResourceSupport {
+
     private List<BlogResource> blogs = new ArrayList<BlogResource>();
 
     public List<BlogResource> getBlogs() {
@@ -15,4 +16,5 @@ public class BlogListResource extends ResourceSupport {
     public void setBlogs(List<BlogResource> blogs) {
         this.blogs = blogs;
     }
+
 }

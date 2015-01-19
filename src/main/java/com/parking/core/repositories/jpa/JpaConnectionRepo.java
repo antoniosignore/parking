@@ -35,7 +35,7 @@ public class JpaConnectionRepo implements ConnectionRepo{
     }
 
     @Override
-    public List<Connection> findConnectionByAccountName(String name) {
+    public List<Connection> findConnectionsByAccountName(String name) {
         Query query = em.createQuery("SELECT b from Connection b where b.initiator.name=?1");
         query.setParameter(1, name);
         return query.getResultList();
@@ -55,4 +55,14 @@ public class JpaConnectionRepo implements ConnectionRepo{
         query.setParameter(1, accountId);
         return query.getResultList();
     }
+
+    @Override
+    public Connection findConnectionByAccountNames(String initiatorName, String receiverName) {
+        Query query = em.createQuery("SELECT a FROM Connection a WHERE a.initiator.name=?1 AND a.initiator.reveiver.name=?2");
+        query.setParameter(1, initiatorName);
+        query.setParameter(2, receiverName);
+        return (Connection) query.getSingleResult();
+    }
+
+
 }

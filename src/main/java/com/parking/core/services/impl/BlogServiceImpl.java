@@ -1,5 +1,8 @@
 package com.parking.core.services.impl;
 
+import com.parking.core.models.entities.Account;
+import com.parking.core.services.exceptions.AccountExistsException;
+import com.parking.core.services.exceptions.BlogExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +24,15 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     private BlogEntryRepo entryRepo;
+
+    @Override
+    public Blog createBlog(Blog data) {
+        Blog account = blogRepo.findBlogByTitle(data.getTitle());
+        if (account != null) {
+            throw new BlogExistsException();
+        }
+        return blogRepo.createBlog(data);
+    }
 
     @Override
     public BlogEntry createBlogEntry(Long blogId, BlogEntry data) {

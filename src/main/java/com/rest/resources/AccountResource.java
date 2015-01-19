@@ -5,10 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.ResourceSupport;
 import com.parking.core.models.entities.Account;
 
-/**
- * Created by Chris on 6/28/14.
- */
 public class AccountResource extends ResourceSupport {
+
     private String name;
 
     private String password;

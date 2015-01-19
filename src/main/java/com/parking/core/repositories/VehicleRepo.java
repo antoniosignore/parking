@@ -12,7 +12,7 @@ public interface VehicleRepo {
 
     public Vehicle findVehicle(Long id);
 
-    public List<Vehicle> findVehiclesByAccount(Long accountId);
+    public List<Vehicle> findVehiclesByAccountId(Long accountId);
 
     public Vehicle findVehicleByName(String name);
 

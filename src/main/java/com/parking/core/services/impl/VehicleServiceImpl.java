@@ -29,6 +29,6 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public List<Vehicle> findByAccountName(Long name) {
-        return vehicleRepo.findVehiclesByAccount(name);
+        return vehicleRepo.findVehiclesByAccountId(name);
     }
 }

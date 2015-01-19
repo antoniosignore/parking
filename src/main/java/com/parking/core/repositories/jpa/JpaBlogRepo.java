@@ -45,7 +45,7 @@ public class JpaBlogRepo implements BlogRepo {
     }
 
     @Override
-    public List<Blog> findBlogsByAccount(Long accountId) {
+    public List<Blog> findBlogsByAccountId(Long accountId) {
         Query query = em.createQuery("SELECT b from Blog b where b.owner.id=?1");
         query.setParameter(1, accountId);
         return query.getResultList();

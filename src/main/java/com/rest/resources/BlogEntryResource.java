@@ -4,6 +4,7 @@ import org.springframework.hateoas.ResourceSupport;
 import com.parking.core.models.entities.BlogEntry;
 
 public class BlogEntryResource extends ResourceSupport {
+
     private String title;
 
     private String content;

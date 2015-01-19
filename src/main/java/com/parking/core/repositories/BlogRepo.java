@@ -14,6 +14,6 @@ public interface BlogRepo {
 
     public Blog findBlogByTitle(String title);
 
-    public List<Blog> findBlogsByAccount(Long accountId);
+    public List<Blog> findBlogsByAccountId(Long accountId);
 
 }
