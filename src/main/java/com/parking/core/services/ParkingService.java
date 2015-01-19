@@ -1,15 +1,11 @@
 package com.parking.core.services;
 
-import com.parking.core.models.entities.AccountGroup;
-import com.parking.core.models.entities.Connection;
 import com.parking.core.models.entities.Parking;
 import com.parking.core.services.util.ParkingList;
 
 import java.util.List;
 
 public interface ParkingService {
-
-//    public Parking createParking(Parking data);
 
     public ParkingList findAllParkings();
 
@@ -19,9 +15,9 @@ public interface ParkingService {
 
     public List<Parking> findParkingsByAccountName(String name);
 
-    public AccountGroup deleteParking(Long id);
-
-    public AccountGroup updateParking(Long id, Parking data);
+//    public AccountGroup deleteParking(Long id);
+//
+//    public AccountGroup updateParking(Long id, Parking data);
 
 
 }

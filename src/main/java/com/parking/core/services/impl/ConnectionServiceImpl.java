@@ -2,6 +2,7 @@ package com.parking.core.services.impl;
 
 import com.parking.core.models.entities.Blog;
 import com.parking.core.models.entities.Connection;
+import com.parking.core.models.entities.Parking;
 import com.parking.core.repositories.ConnectionRepo;
 import com.parking.core.services.ConnectionService;
 import com.parking.core.services.exceptions.BlogExistsException;
@@ -20,14 +21,9 @@ public class ConnectionServiceImpl implements ConnectionService {
     @Autowired
     private ConnectionRepo connectionRepo;
 
-
     @Override
-    public Connection createConnection(Connection data) {
-        Connection account = connectionRepo.findConnectionByAccountNames(data.getInitiator().getName(), data.getReceiver().getName());
-        if (account != null) {
-            throw new ConnectionExistsException();
-        }
-        return connectionRepo.createConnection(data);
+    public List<Connection> findConnectionsByAccountId(Long id) {
+        return connectionRepo.findConnectionsByAccountId(id);
     }
 
     @Override
@@ -41,7 +37,7 @@ public class ConnectionServiceImpl implements ConnectionService {
     }
 
     @Override
-    public List<Connection> findByAccountName(String name) {
+    public List<Connection> findConnectionsByAccountName(String name) {
         return connectionRepo.findConnectionsByAccountName(name);
     }
 }

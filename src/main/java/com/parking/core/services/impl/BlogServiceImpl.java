@@ -25,14 +25,6 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     private BlogEntryRepo entryRepo;
 
-    @Override
-    public Blog createBlog(Blog data) {
-        Blog account = blogRepo.findBlogByTitle(data.getTitle());
-        if (account != null) {
-            throw new BlogExistsException();
-        }
-        return blogRepo.createBlog(data);
-    }
 
     @Override
     public BlogEntry createBlogEntry(Long blogId, BlogEntry data) {

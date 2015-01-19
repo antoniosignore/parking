@@ -37,9 +37,9 @@ public class ParkingServiceImpl implements ParkingService {
         return parkingRepo.findParkingsByAccountName(name);
     }
 
-    @Override
-    public Parking createParking(Long accountId, Parking data){
-        return parkingRepo.createParking(data);
-    }
+//    @Override
+//    public Parking createParking(Long accountId, Parking data){
+//        return parkingRepo.createParking(data);
+//    }
 
 }
