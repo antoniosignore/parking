@@ -17,6 +17,7 @@ public class Parking {
     @NotNull
     Date parkingDate;
 
+    @OneToOne
     Account pickedBy;
 
     @OneToOne

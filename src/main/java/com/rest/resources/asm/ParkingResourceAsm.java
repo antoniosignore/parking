@@ -1,6 +1,7 @@
 package com.rest.resources.asm;
 
 import com.parking.core.models.entities.Parking;
+import com.rest.mvc.AccountController;
 import com.rest.mvc.ParkingController;
 import com.rest.resources.ParkingResource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
@@ -16,6 +17,7 @@ public class ParkingResourceAsm extends ResourceAssemblerSupport<Parking, Parkin
     public ParkingResource toResource(Parking parking) {
         ParkingResource resource = new ParkingResource();
 
+        resource.setRid(parking.getId());
         resource.setLatitude(parking.getLatitude());
         resource.setLongitude(parking.getLongitude());
         resource.setStatus(parking.getStatus());
@@ -23,11 +25,9 @@ public class ParkingResourceAsm extends ResourceAssemblerSupport<Parking, Parkin
 
         resource.add(linkTo(ParkingController.class).slash(parking.getId()).withSelfRel());
 
-        resource.setRid(parking.getId());
-
-//        if (parking.getAccounts() != null)  {
-//            resource.add(linkTo(AccountController.class).slash(parking.get().getId()).withRel("owner"));
-//        }
+        if (parking.getAccount() != null)  {
+            resource.add(linkTo(AccountController.class).slash(parking.getAccount().getId()).withRel("owner"));
+        }
         return resource;
     }
 }

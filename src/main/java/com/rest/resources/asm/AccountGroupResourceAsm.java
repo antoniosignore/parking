@@ -1,6 +1,7 @@
 package com.rest.resources.asm;
 
 import com.parking.core.models.entities.AccountGroup;
+import com.rest.mvc.AccountController;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import com.rest.mvc.AccountGroupController;
 import com.rest.resources.AccountGroupResource;
@@ -24,7 +25,7 @@ public class AccountGroupResourceAsm extends ResourceAssemblerSupport<AccountGro
 
         resource.setRid(accountGroup.getId());
 
-//        if (group.getAccounts() != null)  {
+//        if (accountGroup.getAccounts() != null)  {
 //            resource.add(linkTo(AccountController.class).slash(group.get().getId()).withRel("owner"));
 //        }
         return resource;

@@ -1,6 +1,7 @@
 package com.rest.resources.asm;
 
 import com.parking.core.models.entities.Connection;
+import com.rest.mvc.AccountController;
 import com.rest.mvc.ConnectionController;
 import com.rest.resources.ConnectionResource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
@@ -23,9 +24,13 @@ public class ConnectionResourceAsm extends ResourceAssemblerSupport<Connection, 
 
         resource.setRid(connection.getId());
 
-//        if (connection.getAccounts() != null)  {
-//            resource.add(linkTo(AccountController.class).slash(connection.get().getId()).withRel("owner"));
-//        }
+        if (connection.getInitiator() != null)  {
+            resource.add(linkTo(AccountController.class).slash(connection.getInitiator().getId()).withRel("initiator"));
+        }
+
+        if (connection.getReceiver() != null)  {
+            resource.add(linkTo(AccountController.class).slash(connection.getReceiver().getId()).withRel("receiver"));
+        }
 
         return resource;
     }

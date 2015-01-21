@@ -1,6 +1,7 @@
 package com.mvc;
 
-import com.parking.core.security.AccountUserDetails;
+import com.parking.core.models.entities.AccountGroup;
+import com.parking.core.services.util.AccountGroupList;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -55,6 +56,10 @@ public class AccountControllerTest {
 
     private ArgumentCaptor<Account> accountCaptor;
 
+    Account antonio;
+    Account mida;
+    Account maradona;
+
     @Before
     public void setup() {
 
@@ -73,9 +78,22 @@ public class AccountControllerTest {
         Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
         SecurityContextHolder.setContext(securityContext);
 
-
         when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(details);
 
+        antonio = new Account();
+        antonio.setId(1L);
+        antonio.setName("Antonio");
+        antonio.setPassword("passwordAntonio");
+
+        mida = new Account();
+        mida.setId(2L);
+        mida.setName("Mida");
+        mida.setPassword("passwordMida");
+
+        maradona = new Account();
+        maradona.setId(3L);
+        maradona.setName("Diego");
+        maradona.setPassword("passwordDiego");
     }
 
     @Test
@@ -102,6 +120,37 @@ public class AccountControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
+
+    @Ignore
+    @Test
+    public void findAllAccountGroupsForAccount() throws Exception {
+        List<AccountGroup> accountGroupList = new ArrayList<AccountGroup>();
+
+        AccountGroup group1 = new AccountGroup();
+        group1.setId(1L);
+        group1.setGroupName("gruppo1");
+        group1.setGroupDesc("gruppo1 description");
+        group1.addAccount(antonio);
+        group1.addAccount(mida);
+        accountGroupList.add(group1);
+
+        AccountGroup group2 = new AccountGroup();
+        group2.setId(2L);
+        group2.setGroupName("gruppo2");
+        group1.setGroupDesc("gruppo2 description");
+        accountGroupList.add(group2);
+
+        AccountGroupList blogList = new AccountGroupList(accountGroupList);
+
+        when(service.findAccountGroupsByAccount(1L)).thenReturn(blogList);
+
+        mockMvc.perform(get("/rest/accounts/1/accountGroups"))
+                .andExpect(jsonPath("$.groups[*].title",
+                        hasItems(endsWith("Title A"), endsWith("Title B"))))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
 
     @Test
     public void findAllBlogsForNonExistingAccount() throws Exception {
@@ -134,8 +183,6 @@ public class AccountControllerTest {
 
         when(service.createBlog(eq(1L), any(Blog.class))).thenReturn(createdBlog);
 
-        Account antonio = new Account();
-        antonio.setId(1L);
         when(service.findByAccountName(anyString())).thenReturn(antonio);
 
         mockMvc.perform(post("/rest/accounts/1/blogs")
@@ -247,7 +294,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void findAllAccounts() throws Exception {
+    public void testFindAllAccounts() throws Exception {
         List<Account> accounts = new ArrayList<Account>();
 
         Account accountA = new Account();

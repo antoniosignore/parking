@@ -1,14 +1,10 @@
 package com.parking.core.models.entities;
 
-import com.parking.core.models.entities.Account;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(uniqueConstraints= @UniqueConstraint(columnNames = {"groupName"}))

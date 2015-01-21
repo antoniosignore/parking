@@ -27,7 +27,7 @@ public class VehicleResourceAsm extends ResourceAssemblerSupport<Vehicle, Vehicl
         resource.setRid(vehicle.getId());
 
         if (vehicle.getOwner() != null)  {
-            resource.add(linkTo(AccountController.class).slash(vehicle.getId()).withRel("owner"));
+            resource.add(linkTo(AccountController.class).slash(vehicle.getOwner().getId()).withRel("owner"));
         }
 
         return resource;
