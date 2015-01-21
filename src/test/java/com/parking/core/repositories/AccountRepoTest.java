@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring/business-config.xml")
+@ContextConfiguration("classpath:spring/business-config-test.xml")
 public class AccountRepoTest {
 
     @Autowired

@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring/business-config.xml")
+@ContextConfiguration("classpath:spring/business-config-test.xml")
 public class ConnectionRepoTest {
 
     @Autowired
