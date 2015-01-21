@@ -16,6 +16,7 @@
         <property name="password" value="nicholas"/>
         <property name="url" value="jdbc:postgresql://127.0.0.1:5432/parking"/>
         <property name="driverClassName" value="org.postgresql.Driver"/>
+
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -27,6 +28,7 @@
             <map>
                 <entry key="hibernate.hbm2ddl.auto" value="create-drop"/>
                 <entry key="hibernate.show_sql" value="true"/>
+                <entry key="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
             </map>
         </property>
         <property name="packagesToScan" value="com.parking.core.models.entities"/>
