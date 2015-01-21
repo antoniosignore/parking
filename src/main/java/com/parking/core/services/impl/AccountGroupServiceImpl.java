@@ -1,7 +1,6 @@
 package com.parking.core.services.impl;
 
 import com.parking.core.models.entities.AccountGroup;
-import com.parking.core.models.entities.BlogEntry;
 import com.parking.core.repositories.AccountRepo;
 import com.parking.core.repositories.AccountGroupRepo;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/business-config.xml")
@@ -124,6 +125,49 @@ public class AccountRepoTest {
     public void testFindAllAccounts() {
         List<Account> allAccounts = accountRepo.findAllAccounts();
         assertEquals(2, allAccounts.size());
+    }
+
+    @Test
+    @Transactional
+    public void testUpdateAccount() {
+
+        Account account = new Account();
+        account.setName("provolone");
+        account.setPassword("grassissimo");
+        accountRepo.createAccount(account);
+
+        Account provolone = accountRepo.findAccountByName("provolone");
+
+        assertEquals(provolone.getName(), account.getName());
+
+        provolone.setName("provola");
+        accountRepo.updateAccount(provolone);
+
+        Account antonio3 = accountRepo.findAccountByName("provola");
+
+        assertEquals(antonio3,provolone);
+
+    }
+
+
+    @Test
+    @Transactional
+    public void testDeleteAccount() {
+
+        Account account = new Account();
+        account.setName("provolone");
+        account.setPassword("grassissimo");
+        accountRepo.createAccount(account);
+
+        Account provolone = accountRepo.findAccountByName("provolone");
+        assertEquals(provolone.getName(), account.getName());
+
+        accountRepo.deleteAccount(provolone);
+
+        Account antonio3 = accountRepo.findAccountByName("provolone");
+
+        assertNull(antonio3);
+
     }
 
 }

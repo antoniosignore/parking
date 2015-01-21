@@ -44,4 +44,18 @@ public class JpaAccountRepo implements AccountRepo {
         em.flush();
         return data;
     }
+
+    @Override
+    public Account deleteAccount(Account data) {
+        em.remove(data);
+        em.flush();
+        return data;
+    }
+
+    @Override
+    public Account updateAccount(Account data) {
+        em.merge(data);
+        em.flush();
+        return data;
+    }
 }

@@ -14,4 +14,8 @@ public interface AccountRepo {
 
     public Account createAccount(Account data);
 
+    public Account deleteAccount(Account data);
+
+    public Account updateAccount(Account data);
+
 }

@@ -1,12 +1,8 @@
 package com.parking.core.services.impl;
 
-import com.parking.core.models.entities.Blog;
 import com.parking.core.models.entities.Connection;
-import com.parking.core.models.entities.Parking;
 import com.parking.core.repositories.ConnectionRepo;
 import com.parking.core.services.ConnectionService;
-import com.parking.core.services.exceptions.BlogExistsException;
-import com.parking.core.services.exceptions.ConnectionExistsException;
 import com.parking.core.services.util.ConnectionList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
