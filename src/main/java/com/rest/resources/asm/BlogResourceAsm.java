@@ -15,13 +15,16 @@ public class BlogResourceAsm extends ResourceAssemblerSupport<Blog, BlogResource
 
     @Override
     public BlogResource toResource(Blog blog) {
+
         BlogResource resource = new BlogResource();
         resource.setTitle(blog.getTitle());
+        resource.setRid(blog.getId());
+
         resource.add(linkTo(BlogController.class).slash(blog.getId()).withSelfRel());
         resource.add(linkTo(BlogController.class).slash(blog.getId()).slash("blog-entries").withRel("entries"));
-        resource.setRid(blog.getId());
-        if (blog.getOwner() != null)
-            resource.add(linkTo(AccountController.class).slash(blog.getOwner().getId()).withRel("owner"));
+        if (blog.getOwner() != null) resource.add(linkTo(AccountController.class).slash(blog.getOwner().getId()).withRel("owner"));
         return resource;
+
     }
+
 }

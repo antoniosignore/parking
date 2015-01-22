@@ -28,4 +28,5 @@ public class BlogEntryResourceAsm extends ResourceAssemblerSupport<BlogEntry, Bl
         }
         return res;
     }
+
 }

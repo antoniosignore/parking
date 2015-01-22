@@ -3,6 +3,7 @@ package com.rest.resources.asm;
 import com.parking.core.models.entities.Connection;
 import com.rest.mvc.AccountController;
 import com.rest.mvc.ConnectionController;
+import com.rest.mvc.ParkingController;
 import com.rest.resources.ConnectionResource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
@@ -21,6 +22,7 @@ public class ConnectionResourceAsm extends ResourceAssemblerSupport<Connection, 
         resource.setConfirmed(connection.getConfirmed());
 
         resource.add(linkTo(ConnectionController.class).slash(connection.getId()).withSelfRel());
+        resource.add(linkTo(ConnectionController.class).slash(connection.getId()).slash("connections").withRel("entries"));
 
         resource.setRid(connection.getId());
 

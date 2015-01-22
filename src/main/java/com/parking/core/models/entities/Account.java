@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(uniqueConstraints= @UniqueConstraint(columnNames = {"name"}))
 public class Account {
 
     @Id
@@ -56,8 +55,6 @@ public class Account {
     public void addAccountGroup(AccountGroup group){
         accountGroups.add(group);
     }
-
-
 
     public void removeAccountGroup(AccountGroup group){
         accountGroups.remove(group);

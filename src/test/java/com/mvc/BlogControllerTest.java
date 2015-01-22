@@ -68,6 +68,7 @@ public class BlogControllerTest {
         mockMvc.perform(get("/rest/blogs"))
                 .andExpect(jsonPath("$.blogs[*].title",
                         hasItems(endsWith("Title A"), endsWith("Title B"))))
+                .andDo(print())
                 .andExpect(status().isOk());
     }
 

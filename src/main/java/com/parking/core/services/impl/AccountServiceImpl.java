@@ -38,20 +38,25 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account createAccount(Account data) {
+
         Account account = accountRepo.findAccountByName(data.getName());
+
         if (account != null) {
             throw new AccountExistsException();
         }
+
         return accountRepo.createAccount(data);
     }
 
     @Override
     public Blog createBlog(Long accountId, Blog blog) {
+
         Blog blogSameTitle = blogRepo.findBlogByTitle(blog.getTitle());
 
         if (blogSameTitle != null) throw new BlogExistsException();
 
         Account account = accountRepo.findAccount(accountId);
+
         if (account == null) throw new AccountDoesNotExistException();
 
         Blog createdBlog = blogRepo.createBlog(blog);

@@ -39,6 +39,7 @@ public class AccountRepoTest {
     @Transactional
     @Rollback(false)
     public void setup() {
+
         antonio = new Account();
         antonio.setName("antonio");
         antonio.setPassword("ciccionazzo");
@@ -65,6 +66,7 @@ public class AccountRepoTest {
 
         accountRepo.createAccount(antonio);
         accountRepo.createAccount(mida);
+
     }
 
     @Test
@@ -100,11 +102,7 @@ public class AccountRepoTest {
         dupantonio.setName("antonio");
         dupantonio.setPassword("grassissimo");
 
-        try {
-            accountRepo.createAccount(dupantonio);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        accountRepo.createAccount(dupantonio);
 
         List<Account> allAccounts = accountRepo.findAllAccounts();
 

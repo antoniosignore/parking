@@ -7,6 +7,7 @@ import com.rest.mvc.AccountGroupController;
 import com.rest.resources.AccountGroupResource;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 public class AccountGroupResourceAsm extends ResourceAssemblerSupport<AccountGroup, AccountGroupResource> {
     public AccountGroupResourceAsm() {
@@ -15,19 +16,21 @@ public class AccountGroupResourceAsm extends ResourceAssemblerSupport<AccountGro
 
     @Override
     public AccountGroupResource toResource(AccountGroup accountGroup) {
-        AccountGroupResource resource = new AccountGroupResource();
+        AccountGroupResource res = new AccountGroupResource();
 
-        resource.setGroupName(accountGroup.getGroupName());
-        resource.setGroupDescription(accountGroup.getGroupDesc());
+        res.setGroupName(accountGroup.getGroupName());
+        res.setGroupDescription(accountGroup.getGroupDesc());
 
-        resource.add(linkTo(AccountGroupController.class).slash(accountGroup.getId()).withSelfRel());
-        resource.add(linkTo(AccountGroupController.class).slash(accountGroup.getId()).slash("account-entries").withRel("entries"));
+        res.add(linkTo(AccountGroupController.class).slash(accountGroup.getId()).withSelfRel());
+        res.add(linkTo(AccountGroupController.class).slash(accountGroup.getId()).slash("account-entries").withRel("entries"));
 
-        resource.setRid(accountGroup.getId());
+        res.setRid(accountGroup.getId());
+
+//        res.add(linkTo(methodOn(AccountController.class).findAllAccounts(account.getId())).withRel("blogs"));
 
 //        if (accountGroup.getAccounts() != null)  {
-//            resource.add(linkTo(AccountController.class).slash(group.get().getId()).withRel("owner"));
+//            res.add(linkTo(AccountController.class).slash(group.get().getId()).withRel("owner"));
 //        }
-        return resource;
+        return res;
     }
 }

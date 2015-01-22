@@ -3,12 +3,11 @@ package com.rest.resources;
 import com.parking.core.models.entities.Vehicle;
 import org.springframework.hateoas.ResourceSupport;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 public class VehicleResource extends ResourceSupport {
 
     private String name;
+
     private String licensePlate;
 
     private Long rid;
@@ -39,10 +38,8 @@ public class VehicleResource extends ResourceSupport {
 
     public Vehicle toVehicle() {
         Vehicle vehicle = new Vehicle();
-
         vehicle.setName(this.name);
         vehicle.setLicensePlate(this.licensePlate);
-
         return vehicle;
     }
 }

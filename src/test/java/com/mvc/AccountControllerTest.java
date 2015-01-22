@@ -103,11 +103,13 @@ public class AccountControllerTest {
         Blog blogA = new Blog();
         blogA.setId(1L);
         blogA.setTitle("Title A");
+        blogA.setOwner(antonio);
         list.add(blogA);
 
         Blog blogB = new Blog();
         blogB.setId(2L);
         blogB.setTitle("Title B");
+        blogB.setOwner(antonio);
         list.add(blogB);
 
         BlogList blogList = new BlogList(list);
